@@ -52,7 +52,16 @@
     <PackageCertificateKeyFile>Screeping_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="js\default.js" />
+    <Content Include="default\caste.js" />
+    <Content Include="default\main.garbagecollector.js" />
+    <Content Include="default\main.init.js" />
+    <Content Include="default\main.js" />
+    <Content Include="default\main.population.js" />
+    <Content Include="default\role.builder.js" />
+    <Content Include="default\role.guard.js" />
+    <Content Include="default\role.harvester.js" />
+    <Content Include="default\role.sniper.js" />
+    <Content Include="default\role.upgrader.js" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="Microsoft.WinJS.2.0, Version=1.0" />
