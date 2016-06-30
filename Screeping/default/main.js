@@ -10,6 +10,10 @@ var roleBuilder = require('role.builder');
 var roleGuard = require('role.guard');
 var roleSniper = require('role.sniper');
 
+require('spawn.js')
+for (var name in Game.spawns) {
+    Game.spawns[name].update();
+}
 //for (var name in Game.towers) {
 
 for (var name in Game.creeps) {

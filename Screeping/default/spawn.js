@@ -10,7 +10,7 @@ var DebugLog = function(str)
 }
 Spawn.prototype.update = function()
 {
-
+    console.log('Spawn name ' + this.name)
 }
 
 Spawn.prototype.place = function()
