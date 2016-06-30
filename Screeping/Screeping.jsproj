@@ -52,6 +52,7 @@
     <PackageCertificateKeyFile>Screeping_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="default\spawn.js" />
     <Content Include="default\caste.js" />
     <Content Include="default\main.garbagecollector.js" />
     <Content Include="default\main.init.js" />
