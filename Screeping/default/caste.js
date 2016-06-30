@@ -82,7 +82,7 @@ class Caste {
         if (bodyParts.length < this.m_bodySpec.length) {
             bodyParts = this.m_bodySpec.slice(0);
         }
-        bodyParts.sort(function(a,b) { return this.m_specOrder[a] - this.m_specOrder[b]); });
+        bodyParts.sort(function(a,b) { return this.m_specOrder[a] - this.m_specOrder[b]; });
         return bodyParts;
     }
     
