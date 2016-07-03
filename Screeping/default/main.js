@@ -21,5 +21,7 @@ for (var name in Game.spawns) {
     spawn.update();
 }
 
+require('main.population')
+
 // Cleanup dead objects
 require('main.garbagecollector');

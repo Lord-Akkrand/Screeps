@@ -9,11 +9,8 @@ var DebugLog = function(str)
     }
 }
 
-require('caste')
-class WorkerCaste {
-};
+var Caste = require('caste')
 
-WorkerCaste.prototype = new Caste([WORK, CARRY, MOVE], [MOVE, CARRY, WORK], [MOVE, CARRY, WORK]);
 
 var workerVersion  = 1
 
@@ -22,7 +19,11 @@ var workerMemory = Memory.castes['Worker']
 if (!workerMemory || workerMemory.workerVersion != workerVersion) {
     console.log('Initialising Worker Caste Memory ' + workerVersion)
     // Initialization not done: do it
-    workerMemory = { workerVersion: workerVersion, factory: function () { return new WorkerCaste(); } }
+    workerMemory = {
+        workerVersion: workerVersion, factory: function () {
+            return new Caste([WORK, CARRY, MOVE], [MOVE, CARRY, WORK], [MOVE, CARRY, WORK]);
+        }
+    }
 
     Memory.castes['Worker'] = workerMemory
 }
