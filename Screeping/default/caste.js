@@ -9,42 +9,17 @@ var DebugLog = function(str)
     }
 }
 
-var casteFactory = function(spawn, casteSpecs, levelUpSpecs)
-{
-    var energyCapacity = spawn.room.energyAvailable;
-    var casteSpecsLength = casteSpecs.length;
+var casteVersion = 1
+
+if (!Memory.casteVersion || Memory.casteVersion != casteVersion) {
+    console.log('Initialising Caste Memory ' + Memory.casteVersion + ' -> ' + casteVersion)
+    // Initialization not done: do it
+
+    Memory.castes = {}
     
-    DebugLog('CasteFactory energy ' + energyCapacity + ' original.len ' + casteSpecsLength)
-    var bodyPartIndex = 0;
-    var bodyParts = []
-    while (energyCapacity > 0)
-    {
-        var part = casteSpecs[bodyPartIndex];
-        var partCost = BODYPART_COST[part];
-        DebugLog('attempt part ' + part + ' at cost ' + partCost)
-        if (partCost > energyCapacity) { break; }
-        energyCapacity -= partCost;
-        bodyParts.push(part);
-        DebugLog('added, ' + energyCapacity + ' remaining')
-        bodyPartIndex++;
-        if (bodyPartIndex >= casteSpecsLength) { 
-            bodyPartIndex = 0; 
-            if (levelUpSpecs)
-            {
-                casteSpecs = levelUpSpecs;
-                casteSpecsLength = casteSpecs.length;
-            }
-        }
-    }
-    if (bodyParts.length < casteSpecs.length)
-    {
-        return casteSpecs;
-    }
-    return bodyParts;
+    // Set the initialization flag
+    Memory.casteVersion = casteVersion;
 }
-
-module.exports = casteFactory;
-
 
 class Caste {
     constructor(bodySpec, upgradeSpec, specOrder) {
@@ -90,3 +65,5 @@ class Caste {
         return this.getBodyForEnergy(spawn.room.energyAvailable)
     }
 };
+
+module.exports = Caste;

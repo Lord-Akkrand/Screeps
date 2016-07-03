@@ -3,52 +3,23 @@
 // Initialize the game
 require('main.init');
 
-// Process the creeps
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleGuard = require('role.guard');
-var roleSniper = require('role.sniper');
-
-require('spawn')
-for (var name in Game.spawns) {
-    Game.spawns[name].update();
+require('extend.room')
+for (var name in Memory.rooms) {
+    var room = Game.getObjectById(name);
+    room.update();
 }
-//for (var name in Game.towers) {
 
-for (var name in Game.creeps) {
-    var creep = Game.creeps[name];
-    //console.log(name + ' role ' + creep.memory)
-    
-    switch (creep.memory.role) {
-        
-        case 'upgrader':
-            roleUpgrader.run(creep);
-            break;
-        case 'harvester':
-            roleHarvester.run(creep);
-            break;
-        case 'builder':
-            roleBuilder.run(creep);
-            break;
-        case 'guard':
-            roleGuard.run(creep);
-            break;
-        case 'sniper':
-            roleSniper.run(creep);
-            break
-        default:
-            // idle
-            break;
-    }
+require('extend.source')
+for (var i in Memory.sources) {
+    var source = Game.getObjectById(i);
+    source.update();
+}
+
+require ('extend.spawn')
+for (var name in Game.spawns) {
+    var spawn = Game.spawns[name];
+    spawn.update();
 }
 
 // Cleanup dead objects
 require('main.garbagecollector');
-
-// Process the spawns
-var population = require('main.population');
-for(var name in Game.spawns) {
-    population(Game.spawns[name]);
-}
-

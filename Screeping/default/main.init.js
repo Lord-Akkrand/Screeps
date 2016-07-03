@@ -9,28 +9,12 @@
 
 // Check for the initialization flag
 
-var SpawnVersionNumber = 10
+var mainVersion = 1
 
-if (!Memory.spawnVersion || Memory.spawnVersion != SpawnVersionNumber) {
-    console.log('Initialising Memory ' + Memory.spawnVersion + ' -> ' + SpawnVersionNumber)
+if (!Memory.mainVersion || Memory.mainVersion != mainVersion) {
+    console.log('Initialising Memory ' + Memory.mainVersion + ' -> ' + mainVersion)
     // Initialization not done: do it
-    for (var name in Game.spawns) {
-        console.log('Initialising Spawn ' + name)
-        var spawn = Game.spawns[name];
-        spawn.memory.populationRange = 20;
-        spawn.memory.creepSpecs = {};
-        spawn.memory.creepSpecs['harvester'] = [WORK,CARRY,MOVE];
-        spawn.memory.creepSpecs['upgrader'] = [WORK,CARRY,MOVE];
-        spawn.memory.creepSpecs['builder'] = [WORK,CARRY,MOVE];
-        spawn.memory.creepSpecs['guard'] = [TOUGH,ATTACK,MOVE,MOVE];
-        spawn.memory.creepSpecs['sniper'] = [RANGED_ATTACK,MOVE,MOVE];
-        spawn.memory.creepSpecs['healer'] = [HEAL,MOVE];
-        spawn.memory.levelUpSpecs = {}
-        spawn.memory.levelUpSpecs['harvester'] = [MOVE];
-        spawn.memory.levelUpSpecs['builder'] = [MOVE];
-        
-        spawn.memory.minPopulation = {['harvester']: 7, ['upgrader']: 2, ['builder']: 8, ['guard']: 2, ['sniper']: 1, ['healer']: 0};
-    }
+
     // Set the initialization flag
-    Memory.spawnVersion = SpawnVersionNumber;
+    Memory.mainVersion = mainVersion;
 }
