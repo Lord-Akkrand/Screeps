@@ -27,5 +27,3 @@ if (!workerMemory || workerMemory.workerVersion != workerVersion) {
 
     Memory.castes['Worker'] = workerMemory
 }
-
-module.exports = WorkerCaste;
