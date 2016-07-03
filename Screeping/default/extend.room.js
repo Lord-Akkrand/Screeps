@@ -10,8 +10,6 @@ var DebugLog = function(str)
 }
 
 Room.prototype.initialise = function () {
-    var fs = source.getFreeSpaces()
-
     Memory.rooms[this.name] = {
     }
     console.log("Added memory for Room " + room.name)

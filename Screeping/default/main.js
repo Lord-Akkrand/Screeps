@@ -5,7 +5,7 @@ require('main.init');
 
 require('extend.room')
 for (var name in Memory.rooms) {
-    var room = Game.getObjectById(name);
+    var room = Game.rooms[name];
     room.update();
 }
 

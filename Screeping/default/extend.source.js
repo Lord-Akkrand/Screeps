@@ -19,7 +19,7 @@ Source.prototype.initialise = function () {
 }
 
 Source.prototype.update = function() {
-    console.log('Source name ' + this.name)
+    console.log('Source name ' + this.id)
 }
 
 Source.prototype.getSurroundings = function () {
@@ -27,15 +27,15 @@ Source.prototype.getSurroundings = function () {
     var bottom = this.pos.x + 1
     var left = this.pos.y - 1
     var right = this.pos.y + 1
-    var surroundingsArray = this.room.LookAtArea(top, left, bottom, right, true)
-    return suuroundingArray
+    var surroundingsArray = this.room.lookAtArea(top, left, bottom, right, true)
+    return surroundingsArray
 }
 
 Source.prototype.getFreeSpaces = function() {
     var surroundingsArray = this.getSurroundings()
     var freeSpaces = []
     for (var i in surroundingsArray) {
-        var obj = surroundingArray[i]
+        var obj = surroundingsArray[i]
         if (obj.type == 'terrain' && obj.terrain == 'wall') {
             continue;
         }
