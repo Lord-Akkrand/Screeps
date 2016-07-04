@@ -14,7 +14,8 @@ RoomPosition.prototype.getSurroundings = function () {
     var bottom = this.x + 1
     var left = this.y - 1
     var right = this.y + 1
-    var surroundingsArray = this.room.lookAtArea(top, left, bottom, right, true)
+    var room = Game.rooms[this.roomName]
+    var surroundingsArray = room.lookAtArea(top, left, bottom, right, true)
     return surroundingsArray
 }
 
