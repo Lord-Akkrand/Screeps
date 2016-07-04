@@ -12,24 +12,18 @@ var DebugLog = function(str)
 require('extend.pos')
 
 StructureSpawn.prototype.initialise = function () {
-    this.memory.populationRange = 20;
-    this.memory.creepSpecs = {};
-    this.memory.creepSpecs['harvester'] = [WORK, CARRY, MOVE];
-    this.memory.creepSpecs['upgrader'] = [WORK, CARRY, MOVE];
-    this.memory.creepSpecs['builder'] = [WORK, CARRY, MOVE];
-    this.memory.creepSpecs['guard'] = [TOUGH, ATTACK, MOVE, MOVE];
-    this.memory.creepSpecs['sniper'] = [RANGED_ATTACK, MOVE, MOVE];
-    this.memory.creepSpecs['healer'] = [HEAL, MOVE];
-    this.memory.levelUpSpecs = {}
-    this.memory.levelUpSpecs['harvester'] = [MOVE];
-    this.memory.levelUpSpecs['builder'] = [MOVE];
-        
-    this.memory.minPopulation = { ['harvester']: 7, ['upgrader']: 2, ['builder']: 8, ['guard']: 2, ['sniper']: 1, ['healer']: 0 };
-    console.log('Spawn ' + this.name + 'initialised.')
+
 }
+
 StructureSpawn.prototype.update = function ()
 {
-    console.log('Spawn name ' + this.name)
+    var sources = this.room.getSources()
+    var creepsInRoom = this.room.getCreepsInRoom()
+    var myCreepsInRoom = creepsInRoom[FIND_MY_CREEPS]
+    console.log('Spawn name ' + this.name + '.  Sources ' + sources.length + '.  My Creeps ' + myCreepsInRoom.length)
+    for (var name in myCreepsInRoom) {
+
+    }
 }
 
 StructureSpawn.prototype.place = function ()

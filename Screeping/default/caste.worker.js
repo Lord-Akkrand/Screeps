@@ -27,7 +27,7 @@ if (!workerMemory || workerMemory.workerVersion != workerVersion) {
 }
 
 var WorkerFactory = function () {
-    return new Caste([WORK, CARRY, MOVE], [MOVE, CARRY, WORK], [MOVE, CARRY, WORK]);
+    return 
 }
 
 module.exports = WorkerFactory

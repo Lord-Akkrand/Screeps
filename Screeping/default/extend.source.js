@@ -16,7 +16,9 @@ Source.prototype.initialise = function () {
 
     Memory.sources[this.id] = {
         FreeSpaces: fs,
+        Assigned: {},
     }
+    this.calculateRequiredHarvesters();
     console.log("Added memory for Source " + this.id + " in Room " + this.room.id)
     var fsMem =  Memory.sources[this.id].FreeSpaces
     for (var i in fsMem) {
@@ -27,37 +29,50 @@ Source.prototype.initialise = function () {
 Source.prototype.update = function() {
     console.log('Source name ' + this.id)
 }
-/*
 
-Source.prototype.getSurroundings = function () {
-    var top = this.pos.x - 1
-    var bottom = this.pos.x + 1
-    var left = this.pos.y - 1
-    var right = this.pos.y + 1
-    var surroundingsArray = this.room.lookAtArea(top, left, bottom, right, true)
-    return surroundingsArray
+Source.prototype.getMemory = function () {
+    return Memory.sources[this.id];
 }
 
-Source.prototype.getFreeSpaces = function() {
-    var surroundingsArray = this.getSurroundings()
-    var freeSpaces = []
-    for (var i in surroundingsArray) {
-        var obj = surroundingsArray[i]
-        if (obj.type == 'terrain' && obj.terrain == 'wall') {
-            continue;
-        }
-        if (obj.type == 'structure'
-            && obj.structure.structureType != STRUCTURE_ROAD
-            && obj.structureType != STRUCTURE_RAMPART
-            && obj.structureType != STRUCTURE_CONTAINER) {
-            continue;
-        }
-        freeSpaces.push(new RoomPosition(obj.x, obj.y, this.room.name));
+Source.prototype.calculateRequiredHarvesters = function () {
+    console.log('Source name ' + this.id + ' calculateRequiredHarvesters')
+    var mem = this.getMemory();
+    mem.RequiredHarvesters = mem.FreeSpaces.length
+}
+
+Source.prototype.getRequiredHarvesters = function () {
+    console.log('Source name ' + this.id + ' getRequiredHarvesters')
+    var mem = this.getMemory()
+    if (mem.RequiredHarvesters == undefined) {
+        this.calculateRequiredHarvesters()
     }
-    return freeSpaces;
+    return mem.RequiredHarvesters
 }
 
-*/
+Source.prototype.getAssigned = function (role) {
+    var mem = this.getMemory();
+    var count = 0;
+    for (var creep in mem.Assigned) {
+        if (mem.Assigned[creep] == role) {
+            count++;
+        }
+    }
+    return count;
+}
+
+Source.prototype.assign = function (creep, role) {
+    var mem = this.getMemory();
+    mem.Assigned[creep.name] = role;
+}
+
+Source.prototype.garbagecollector = function () {
+    var mem = this.getMemory();
+    for (var creep  in mem.Assigned) {
+        if (!Game.creeps[creep]) {
+            delete mem.Assigned[creep];
+        }
+    }
+}
 
 var sourceVersionNumber = 2
 
