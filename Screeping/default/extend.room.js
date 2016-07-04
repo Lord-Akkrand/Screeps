@@ -49,9 +49,9 @@ Room.prototype.getCreepRequirements = function () {
 Room.prototype.updateCreepsInRoom = function () {
     var mem = this.getMemory()
     var creeps = this.find(FIND_CREEPS);
-    var allCreeps = {}
-    var myCreeps = {}
-    var hostileCreeps = {}
+    var allCreeps = []
+    var myCreeps = []
+    var hostileCreeps = []
     for (var creepName in creeps) {
         allCreeps.push(creepName);
         var creep = creeps[creepName];
@@ -63,9 +63,9 @@ Room.prototype.updateCreepsInRoom = function () {
         }
     }
     mem.CreepsInRoom = {
-        FIND_CREEPS: allCreeps,
-        FIND_MY_CREEPS: myCreeps,
-        FIND_HOSTILE_CREEPS: hostileCreeps,
+        [FIND_CREEPS]: allCreeps,
+        [FIND_MY_CREEPS]: myCreeps,
+        [FIND_HOSTILE_CREEPS]: hostileCreeps,
     }
 }
 
@@ -79,7 +79,7 @@ Room.prototype.getSources = function () {
     return mem.Sources
 }
 
-var roomVersionNumber = 1
+var roomVersionNumber = 2
 
 if (!Memory.roomVersionNumber || Memory.roomVersionNumber != roomVersionNumber) {
     console.log('Initialising Room Memory ' + Memory.roomVersionNumber + ' -> ' + roomVersionNumber)

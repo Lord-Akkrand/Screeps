@@ -20,9 +20,30 @@ StructureSpawn.prototype.update = function ()
     var sources = this.room.getSources()
     var creepsInRoom = this.room.getCreepsInRoom()
     var myCreepsInRoom = creepsInRoom[FIND_MY_CREEPS]
+    
     console.log('Spawn name ' + this.name + '.  Sources ' + sources.length + '.  My Creeps ' + myCreepsInRoom.length)
-    for (var name in myCreepsInRoom) {
 
+    var requiredCreeps = this.room.getCreepRequirements()
+    var remainingRequired = {}
+    for (var roleId in requiredCreeps) {
+        var requiredCount = requiredCreeps[roleId];
+        remainingRequired[roleId] = requiredCount;
+        console.log(' Requires ' + requiredCount + ' ' + roleId + ' creeps.')
+    }
+    for (var name in myCreepsInRoom) {
+        var creep = Game.creeps[name];
+        var role = creep.memory.role;
+        console.log('  ' + name + ' is a ' + role);
+        if (remainingRequired[role] != undefined) {
+            remainingRequired[role]--;
+        }
+    }
+    for (var roleId in remainingRequired) {
+        var requiredCount = remainingRequired[roleId];
+        
+        if (requiredCount > 0) {
+            console.log(' Still Requires ' + requiredCount + ' ' + roleId + ' creeps.')
+        }
     }
 }
 
