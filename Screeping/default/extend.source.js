@@ -16,6 +16,10 @@ Source.prototype.initialise = function () {
         FreeSpaces: fs,
     }
     console.log("Added memory for Source " + this.id + " in Room " + this.room.id)
+    var fsMem =  Memory.sources[this.id].FreeSpaces
+    for (var i in fsMem) {
+        console.log(' fs ' + i + ' ' + fsMem[i])
+    }
 }
 
 Source.prototype.update = function() {
@@ -49,7 +53,7 @@ Source.prototype.getFreeSpaces = function() {
 
 
 
-var sourceVersionNumber = 1
+var sourceVersionNumber = 2
 
 if (!Memory.sourceVersionNumber || Memory.sourceVersionNumber != sourceVersionNumber) {
     console.log('Initialising Source Memory ' + Memory.sourceVersionNumber + ' -> ' + sourceVersionNumber)

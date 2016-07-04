@@ -20,10 +20,14 @@ if (!workerMemory || workerMemory.workerVersion != workerVersion) {
     console.log('Initialising Worker Caste Memory ' + workerVersion)
     // Initialization not done: do it
     workerMemory = {
-        workerVersion: workerVersion, factory: function () {
-            return new Caste([WORK, CARRY, MOVE], [MOVE, CARRY, WORK], [MOVE, CARRY, WORK]);
-        }
+        workerVersion: workerVersion 
     }
 
     Memory.castes['Worker'] = workerMemory
 }
+
+var WorkerFactory = function () {
+    return new Caste([WORK, CARRY, MOVE], [MOVE, CARRY, WORK], [MOVE, CARRY, WORK]);
+}
+
+module.exports = WorkerFactory

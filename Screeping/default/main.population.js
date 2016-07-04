@@ -16,7 +16,7 @@ var DebugLog = function(str)
     }
 }
  
-require('caste.worker');
+var WorkerFactory = require('caste.worker');
 
 for (var casteName in Memory.castes) {
     console.log("Population " + casteName);
