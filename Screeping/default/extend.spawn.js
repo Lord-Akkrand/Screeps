@@ -45,10 +45,10 @@ StructureSpawn.prototype.update = function ()
         
         if (requiredCount > 0) {
             console.log(' Still Requires ' + requiredCount + ' ' + roleId + ' creeps.')
-            var role = Role.GetRole(roleId);
+            var role = GetRole(roleId);
             var roleMem = role.getMemory()
             var caste = roleMem.Caste;
-            var body = CasteFactory({ caste: Caste, spawn: this });
+            var body = CasteFactory({ caste: caste, spawn: this });
             
             var newName = this.createCreep(body, undefined, { role: roleId });
             console.log(' Spawn returns' + newName);

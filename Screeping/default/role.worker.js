@@ -18,7 +18,7 @@ if (!workerMemory || workerMemory.workerRoleVersion != workerRoleVersion) {
     // Initialization not done: do it
     workerMemory = {
         workerRoleVersion: workerRoleVersion,
-        caste: 'Worker',
+        Caste: 'Worker',
     }
 
     Memory.roles['Worker'] = workerMemory

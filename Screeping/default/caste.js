@@ -23,6 +23,7 @@ if (!Memory.casteVersion || Memory.casteVersion != casteVersion) {
 
 class Caste {
     constructor(bodySpec, upgradeSpec, specOrder) {
+        console.log(bodySpec + ' ' + upgradeSpec + ' ' + specOrder)
         this.m_bodySpec = bodySpec
         this.m_upgradeSpec = upgradeSpec
         this.m_specOrder = {}
@@ -57,7 +58,8 @@ class Caste {
         if (bodyParts.length < this.m_bodySpec.length) {
             bodyParts = this.m_bodySpec.slice(0);
         }
-        bodyParts.sort(function(a,b) { return this.m_specOrder[a] - this.m_specOrder[b]; });
+        var so = this.m_specOrder
+        bodyParts.sort(function(a,b) { return so[a] - so[b]; });
         return bodyParts;
     }
     
@@ -71,6 +73,7 @@ var WorkerFactory = require('caste.worker')
 var CasteFactory = function(requirements) {
     var casteId = requirements.caste;
     var caste = undefined;
+    console.log('CasteFactory ' + casteId)
     switch (casteId) {
         case 'Worker':
             caste = WorkerFactory(Caste);
