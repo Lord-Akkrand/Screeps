@@ -11,7 +11,6 @@ var DebugLog = function(str)
 
 Room.prototype.initialise = function () {
     var mem = {
-        RequiredCreeps: {},
         Sources: [],
     }
     var sources = this.find(FIND_SOURCES);
@@ -38,7 +37,7 @@ Room.prototype.calculateCreepRequirements = function () {
 }
 
 Room.prototype.getCreepRequirements = function () {
-    console.log('Source name ' + this.id + ' getRequiredHarvesters')
+    console.log('Room name ' + this.name + ' getCreepRequirements')
     var mem = this.getMemory()
     if (mem.RequiredCreeps == undefined) {
         this.calculateCreepRequirements()
@@ -79,7 +78,7 @@ Room.prototype.getSources = function () {
     return mem.Sources
 }
 
-var roomVersionNumber = 2
+var roomVersionNumber = 3
 
 if (!Memory.roomVersionNumber || Memory.roomVersionNumber != roomVersionNumber) {
     console.log('Initialising Room Memory ' + Memory.roomVersionNumber + ' -> ' + roomVersionNumber)
