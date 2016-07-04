@@ -9,7 +9,7 @@ var DebugLog = function(str)
     }
 }
 
-Role = require('role')
+var Role = require('role')
 
 Room.prototype.initialise = function () {
     var mem = {
