@@ -22,6 +22,7 @@ RoomPosition.prototype.getSurroundings = function () {
 RoomPosition.prototype.getFreeSpaces = function () {
     var surroundingsArray = this.getSurroundings()
     var freeSpaces = []
+    var room = Game.rooms[this.roomName]
     for (var i in surroundingsArray) {
         var obj = surroundingsArray[i]
         if (obj.type == 'terrain' && obj.terrain == 'wall') {
@@ -33,7 +34,7 @@ RoomPosition.prototype.getFreeSpaces = function () {
             && obj.structureType != STRUCTURE_CONTAINER) {
             continue;
         }
-        freeSpaces.push(new RoomPosition(obj.x, obj.y, this.room.name));
+        freeSpaces.push(new RoomPosition(obj.x, obj.y, room.name));
     }
     return freeSpaces;
 }
