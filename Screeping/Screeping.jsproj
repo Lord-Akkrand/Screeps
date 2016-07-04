@@ -52,6 +52,7 @@
     <PackageCertificateKeyFile>Screeping_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="default\extend.creep.js" />
     <Content Include="default\role.worker.js" />
     <Content Include="default\caste.worker.js" />
     <Content Include="default\extend.controller.js" />

@@ -11,7 +11,7 @@ var DebugLog = function(str)
 
 require('extend.pos')
 var CasteFactory = require('caste')
-var GetRole = require('role')
+var Role = require('role')
 
 StructureSpawn.prototype.initialise = function () {
 
@@ -45,12 +45,12 @@ StructureSpawn.prototype.update = function ()
         
         if (requiredCount > 0) {
             console.log(' Still Requires ' + requiredCount + ' ' + roleId + ' creeps.')
-            var role = GetRole(roleId);
+            var role = Role.GetRole(roleId);
             var roleMem = role.getMemory()
             var caste = roleMem.Caste;
             var body = CasteFactory({ caste: caste, spawn: this });
             
-            var newName = this.createCreep(body, undefined, { role: roleId });
+            var newName = this.createCreep(body, undefined, { Role: roleId });
             console.log(' Spawn returns' + newName);
         }
     }

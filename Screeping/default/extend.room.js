@@ -9,6 +9,8 @@ var DebugLog = function(str)
     }
 }
 
+Role = require('role')
+
 Room.prototype.initialise = function () {
     var mem = {
         Sources: [],
@@ -33,8 +35,18 @@ Room.prototype.getMemory = function () {
 Room.prototype.calculateCreepRequirements = function () {
     console.log('Room name ' + this.name + 'calculateCreepRequirements')
     var mem = this.getMemory();
+    var sources = this.GetSources();
     mem.RequiredCreeps = {};
+    var roles = Role.GetRoles()
+    for (var i in roles) {
+        mem.RequiredCreeps[roles[i]] = 0;
+    }
+    // Always at least one worker
     mem.RequiredCreeps['Worker'] = 1;
+    for (var i in sources) {
+        var source = Game.getObjectById(sources[i]);
+        mem.RequiredCreeps['Harveseter'] += Math.max(0, source.getRequiredHarvesters() - source.getAssigned('Harvester'));
+    }
 }
 
 Room.prototype.getCreepRequirements = function () {
@@ -52,9 +64,11 @@ Room.prototype.updateCreepsInRoom = function () {
     var allCreeps = []
     var myCreeps = []
     var hostileCreeps = []
-    for (var creepName in creeps) {
+    for (var i in creeps) {
+        var creep = creeps[i]
+        var creepName = creep.name
+        //console.log(' found ' + creepName);
         allCreeps.push(creepName);
-        var creep = creeps[creepName];
         if (creep.my) {
             myCreeps.push(creepName);
         }

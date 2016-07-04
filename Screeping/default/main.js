@@ -21,6 +21,12 @@ for (var name in Game.spawns) {
     spawn.update();
 }
 
+require('extend.creep')
+for (var name in Game.creeps) {
+    var creep = Game.creeps[name];
+    creep.update();
+}
+
 require('main.population')
 
 // Cleanup dead objects

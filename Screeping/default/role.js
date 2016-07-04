@@ -18,18 +18,24 @@ if (!Memory.roleVersion || Memory.roleVersion != roleVersion) {
     // Set the initialization flag
     Memory.roleVersion = roleVersion;
 }
-
-var WorkerRole = require('role.worker')
-
-var GetRole = function (role) {
-    switch (role) {
-        case 'Worker':
-            return WorkerRole
-            break;
-        default:
-            // NO ROLE!
-            break;
-    }
+var Roles = {
+    Worker: require('role.worker'),
+}
+var RoleNames = []
+for (var role in Roles) {
+    RoleNames.push(role);
 }
 
-module.exports = GetRole
+var Role = {
+    GetRole: function (role) {
+        if (Roles[role]) {
+            return Roles[role];
+        }
+    },
+    GetRoles: function() {
+        return RoleNames;
+    }
+}
+var 
+
+module.exports = Role

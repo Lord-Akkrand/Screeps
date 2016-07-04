@@ -26,7 +26,7 @@ if (!workerMemory || workerMemory.workerRoleVersion != workerRoleVersion) {
 
 var WorkerRole = {
     update: function (creep) {
-
+        console.log(creep.name + ' updating WorkerRole')
     },
     getMemory: function () {
         return Memory.roles['Worker']
