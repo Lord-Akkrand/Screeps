@@ -35,7 +35,6 @@ var Role = {
     GetRoles: function() {
         return RoleNames;
     }
-}
-var 
+} 
 
 module.exports = Role

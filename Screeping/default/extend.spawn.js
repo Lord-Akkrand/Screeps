@@ -32,12 +32,16 @@ StructureSpawn.prototype.update = function ()
         remainingRequired[roleId] = requiredCount;
         console.log(' Requires ' + requiredCount + ' ' + roleId + ' creeps.')
     }
-    for (var name in myCreepsInRoom) {
+    for (var i in myCreepsInRoom) {
+        var name = myCreepsInRoom[i]
         var creep = Game.creeps[name];
-        var role = creep.memory.role;
-        console.log('  ' + name + ' is a ' + role);
-        if (remainingRequired[role] != undefined) {
-            remainingRequired[role]--;
+        var creepMem = creep.getMemory()
+        if (creepMem) {
+            var role = creepMem.Role;
+            console.log('  ' + name + ' is a ' + role);
+            if (remainingRequired[role] != undefined) {
+                remainingRequired[role]--;
+            }
         }
     }
     for (var roleId in remainingRequired) {

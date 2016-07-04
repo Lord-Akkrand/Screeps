@@ -35,7 +35,7 @@ Room.prototype.getMemory = function () {
 Room.prototype.calculateCreepRequirements = function () {
     console.log('Room name ' + this.name + 'calculateCreepRequirements')
     var mem = this.getMemory();
-    var sources = this.GetSources();
+    var sources = this.getSources();
     mem.RequiredCreeps = {};
     var roles = Role.GetRoles()
     for (var i in roles) {

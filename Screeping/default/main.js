@@ -4,24 +4,25 @@
 require('main.init');
 
 require('extend.room')
+require('extend.source')
+require('extend.spawn')
+require('extend.creep')
+
 for (var name in Memory.rooms) {
     var room = Game.rooms[name];
     room.update();
 }
 
-require('extend.source')
 for (var i in Memory.sources) {
     var source = Game.getObjectById(i);
     source.update();
 }
 
-require ('extend.spawn')
 for (var name in Game.spawns) {
     var spawn = Game.spawns[name];
     spawn.update();
 }
 
-require('extend.creep')
 for (var name in Game.creeps) {
     var creep = Game.creeps[name];
     creep.update();
