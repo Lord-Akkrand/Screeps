@@ -9,7 +9,7 @@ var DebugLog = function(str)
     }
 }
 
-var workerRoleVersion  = 1
+var workerRoleVersion  = 2
 
 var workerMemory = Memory.roles['Worker']
 
@@ -17,7 +17,8 @@ if (!workerMemory || workerMemory.workerRoleVersion != workerRoleVersion) {
     console.log('Initialising Worker Caste Memory ' + workerRoleVersion)
     // Initialization not done: do it
     workerMemory = {
-        workerRoleVersion: workerRoleVersion
+        workerRoleVersion: workerRoleVersion,
+        caste: 'Worker',
     }
 
     Memory.roles['Worker'] = workerMemory
@@ -26,6 +27,9 @@ if (!workerMemory || workerMemory.workerRoleVersion != workerRoleVersion) {
 var WorkerRole = {
     update: function (creep) {
 
+    },
+    getMemory: function () {
+        return Memory.roles['Worker']
     }
 }
 

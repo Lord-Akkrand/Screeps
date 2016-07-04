@@ -9,9 +9,6 @@ var DebugLog = function(str)
     }
 }
 
-var Caste = require('caste')
-
-
 var workerVersion  = 1
 
 var workerMemory = Memory.castes['Worker']
@@ -26,8 +23,8 @@ if (!workerMemory || workerMemory.workerVersion != workerVersion) {
     Memory.castes['Worker'] = workerMemory
 }
 
-var WorkerFactory = function () {
-    return 
+var WorkerFactory = function (factory) {
+    return new factory([WORK, CARRY, MOVE], [MOVE, CARRY, WORK], [MOVE, CARRY, WORK]);
 }
 
 module.exports = WorkerFactory

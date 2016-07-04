@@ -33,6 +33,7 @@ Room.prototype.getMemory = function () {
 Room.prototype.calculateCreepRequirements = function () {
     console.log('Room name ' + this.name + 'calculateCreepRequirements')
     var mem = this.getMemory();
+    mem.RequiredCreeps = {};
     mem.RequiredCreeps['Worker'] = 1;
 }
 

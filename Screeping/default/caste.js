@@ -66,4 +66,24 @@ class Caste {
     }
 };
 
-module.exports = Caste;
+var WorkerFactory = require('caste.worker')
+
+var CasteFactory = function(requirements) {
+    var casteId = requirements.caste;
+    var caste = undefined;
+    switch (casteId) {
+        case 'Worker':
+            caste = WorkerFactory(Caste);
+            break;
+        default:
+            break;
+    }
+    if (requirements.spawn) {
+        return caste.getBodyForSpawn(requirements.spawn);
+    }
+    else {
+        return caste.getBodyForEnergy(requirements.energy);
+    }
+}
+
+module.exports = CasteFactory;

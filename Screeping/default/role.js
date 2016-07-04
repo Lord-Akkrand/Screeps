@@ -21,10 +21,10 @@ if (!Memory.roleVersion || Memory.roleVersion != roleVersion) {
 
 var WorkerRole = require('role.worker')
 
-var UpdateRole = function (creep) {
-    switch (creep.memory.role) {
+var GetRole = function (role) {
+    switch (role) {
         case 'Worker':
-            WorkerRole.update(creep);
+            return WorkerRole
             break;
         default:
             // NO ROLE!
@@ -32,4 +32,4 @@ var UpdateRole = function (creep) {
     }
 }
 
-module.exports = UpdateRole
+module.exports = GetRole
