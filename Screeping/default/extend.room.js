@@ -16,7 +16,9 @@ Room.prototype.initialise = function () {
         Sources: [],
     }
     var sources = this.find(FIND_SOURCES);
-    for (var id in sources) {
+    for (var i in sources) {
+        var source = sources[i];
+        var id = source.id;
         mem.Sources.push(id);
     }
     Memory.rooms[this.name] = mem
@@ -33,7 +35,7 @@ Room.prototype.getMemory = function () {
 }
 
 Room.prototype.calculateCreepRequirements = function () {
-    console.log('Room name ' + this.name + 'calculateCreepRequirements')
+    console.log('Room name ' + this.name + ' calculateCreepRequirements')
     var mem = this.getMemory();
     var sources = this.getSources();
     mem.RequiredCreeps = {};
@@ -44,6 +46,7 @@ Room.prototype.calculateCreepRequirements = function () {
     // Always at least one worker
     mem.RequiredCreeps['Worker'] = 1;
     for (var i in sources) {
+        console.log(i + ' ' + sources[i])
         var source = Game.getObjectById(sources[i]);
         mem.RequiredCreeps['Harveseter'] += Math.max(0, source.getRequiredHarvesters() - source.getAssigned('Harvester'));
     }

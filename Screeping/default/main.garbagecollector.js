@@ -20,8 +20,3 @@ for (var name in Memory.spawns) {
         delete Memory.spawns[name];
     }
 }
-
-for (var i in Memory.sources) {
-    var source = Game.getObjectById(i);
-    source.garbagecollector();
-}

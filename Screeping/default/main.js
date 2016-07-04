@@ -3,6 +3,9 @@
 // Initialize the game
 require('main.init');
 
+// Cleanup dead objects
+require('main.garbagecollector');
+
 require('extend.room')
 require('extend.source')
 require('extend.spawn')
@@ -30,5 +33,4 @@ for (var name in Game.creeps) {
 
 require('main.population')
 
-// Cleanup dead objects
-require('main.garbagecollector');
+
