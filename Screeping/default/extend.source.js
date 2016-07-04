@@ -9,8 +9,10 @@ var DebugLog = function(str)
     }
 }
 
+require('extend.pos')
+
 Source.prototype.initialise = function () {
-    var fs = this.getFreeSpaces()
+    var fs = this.pos.getFreeSpaces()
 
     Memory.sources[this.id] = {
         FreeSpaces: fs,
@@ -25,6 +27,7 @@ Source.prototype.initialise = function () {
 Source.prototype.update = function() {
     console.log('Source name ' + this.id)
 }
+/*
 
 Source.prototype.getSurroundings = function () {
     var top = this.pos.x - 1
@@ -43,7 +46,10 @@ Source.prototype.getFreeSpaces = function() {
         if (obj.type == 'terrain' && obj.terrain == 'wall') {
             continue;
         }
-        if (obj.type == 'structure' && obj.structure.structureType != STRUCTURE_ROAD && obj.structureType != STRUCTURE_RAMPART) {
+        if (obj.type == 'structure'
+            && obj.structure.structureType != STRUCTURE_ROAD
+            && obj.structureType != STRUCTURE_RAMPART
+            && obj.structureType != STRUCTURE_CONTAINER) {
             continue;
         }
         freeSpaces.push(new RoomPosition(obj.x, obj.y, this.room.name));
@@ -51,7 +57,7 @@ Source.prototype.getFreeSpaces = function() {
     return freeSpaces;
 }
 
-
+*/
 
 var sourceVersionNumber = 2
 

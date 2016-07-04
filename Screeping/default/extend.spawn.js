@@ -9,6 +9,8 @@ var DebugLog = function(str)
     }
 }
 
+require('extend.pos')
+
 StructureSpawn.prototype.initialise = function () {
     this.memory.populationRange = 20;
     this.memory.creepSpecs = {};
