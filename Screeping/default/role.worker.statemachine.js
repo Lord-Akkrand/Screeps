@@ -1,35 +1,38 @@
 // role.worker.statemachine.js
 
-var CollectState = {
-    name: 'CollectState',
-    InitMemory: function() {
+class CollectState {
+    constructor(name) {
+        this.name = 'CollectState';
+    }
+
+    InitMemory() {
         // Return an object containing a default set of data for this state
         return {};
-    },
+    }
 
-    GetName: function() {
+    GetName() {
         return this.name;
-    },
+    }
 
-    OnEnter: function(owner, stateMachine, previousState) {
-    },
+    OnEnter(owner, stateMachine, previousState) {
+    }
 
-    OnUpdate: function(owner, stateMachine) {
-    },
+    OnUpdate(owner, stateMachine) {
+    }
 
-    OnExit: function(owner, stateMachine, nextState) {
-    },
+    OnExit(owner, stateMachine, nextState) {
+    }
 
     // Override these Can* functions to provide further control on how other states
     // affect this state.
-    CanEnter: function (owner, stateMachine) {
+    CanEnter (owner, stateMachine) {
         var carryParts = owner.getActiveBodyParts(CARRY);
         return carryParts > 0;
-    },
+    }
 
-    CanExit: function(owner, stateMachine) {
+    CanExit(owner, stateMachine) {
         return true;
-    },
+    }
 };
 
 var StateMachine = require('statemachine')

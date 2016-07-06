@@ -30,7 +30,7 @@ class StateMachine {
             stateMachinesMemory[this.stateMachineName] = {
                 currentStateName: '',
                 isEntering: false,
-                states = {},
+                states: {},
             };
         }
         return stateMachinesMemory[this.stateMachineName];
