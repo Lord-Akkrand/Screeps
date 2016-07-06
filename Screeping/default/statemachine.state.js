@@ -8,38 +8,35 @@
 // nothing kind of state.
 ////////////////////////////////////////////////////////////////////-
 
-class State {
-    constructor(name) {
-        this.name = 'StateDoNothing';
-    }
-
-    InitMemory() {
+var State = {
+    name: 'StateDoNothing',
+    InitMemory: function() {
         // Return an object containing a default set of data for this state
         return {};
-    }
+    },
 
-    GetName() {
+    GetName: function() {
         return this.name;
-    }
+    },
 
-    OnEnter(owner, stateMachine, previousState) {
-    }
+    OnEnter: function(owner, stateMachine, previousState) {
+    },
 
-    OnUpdate(owner, stateMachine) {
-    }
+    OnUpdate: function(owner, stateMachine) {
+    },
 
-    OnExit(owner, stateMachine, nextState) {
-    }
+    OnExit: function(owner, stateMachine, nextState) {
+    },
 
     // Override these Can* functions to provide further control on how other states
     // affect this state.
-    CanEnter(owner, stateMachine) {
+    CanEnter: function(owner, stateMachine) {
         return true;
-    }
+    },
 
-    CanExit(owner, stateMachine) {
+    CanExit: function(owner, stateMachine) {
         return true;
-    }
+    },
 };
 
 module.exports = State
