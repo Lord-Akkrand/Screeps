@@ -24,9 +24,12 @@ if (!workerMemory || workerMemory.workerRoleVersion != workerRoleVersion) {
     Memory.roles['Worker'] = workerMemory
 }
 
+var WorkerStateMachine = require('role.worker.statemachine');
+
 var WorkerRole = {
     update: function (creep) {
         console.log(creep.name + ' updating WorkerRole')
+        WorkerStateMachine.OnUpdate(creep);
     },
     getMemory: function () {
         return Memory.roles['Worker']

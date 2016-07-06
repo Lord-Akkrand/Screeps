@@ -1,30 +1,30 @@
 // statemachine.js
-/
+var State = require('statemachine.state');
 
-var StateMachine = {
+class StateMachine {
     
-    OnInit: function(name) {
+    OnInit(name) {
         this.stateMachineName = name;
         this.states = {};
         
         // Register 'nothing' state
         this.RegisterState(State)
-    },
+    }
 
-    IsCurrentState: function(stateClass, owner) {
+    IsCurrentState(stateClass, owner) {
         var currState = this.GetCurrentState(owner);
         return (currState != undefined && currState.GetName() == stateClass.name);
-    },
+    }
 
-    GetStateMachinesMemory: function(owner) {
+    GetStateMachinesMemory(owner) {
         var memory = owner.getMemory();
         if (memory.StateMachines == undefined) {
             memory.StateMachines = {}
         }
         return memory.StateMachines;
-    },
+    }
 
-    GetStateMachineMemory: function(owner) {
+    GetStateMachineMemory(owner) {
         var stateMachinesMemory = this.GetStateMachinesMemory(owner);
         if (stateMachinesMemory[this.stateMachineName] == undefined) {
             stateMachinesMemory[this.stateMachineName] = {
@@ -34,33 +34,33 @@ var StateMachine = {
             };
         }
         return stateMachinesMemory[this.stateMachineName];
-    },
+    }
 
-    GetStateMemory: function(owner, stateName) {
+    GetStateMemory(owner, stateName) {
         var machineMemory = this.GetStateMachineMemory();
         if (machineMemory.states[stateName] == undefined) {
             var state = this.GetState(stateName);
             machineMemory.states[stateName] = state.InitMemory();
         }
         return machineMemory.states[stateName];
-    },
+    }
 
-    GetCurrentState: function(owner) {
+    GetCurrentState(owner) {
         var machineMemory = this.GetStateMachineMemory(owner);
         var currentStateName = machineMemory.currentStateName
         return this.states[currentStateName];
-    },
+    }
 
-    SetCurrentStateName: function(owner, name) {
+    SetCurrentStateName(owner, name) {
         var machineMemory = this.GetStateMachineMemory(owner);
         machineMemory.currentStateName = name;
-    },
+    }
 
-    GetState: function(stateName) {
+    GetState(stateName) {
         return this.states[stateName];
-    },
+    }
 
-    RegisterState: function(stateObj, isAliasin) {
+    RegisterState(stateObj, isAliasin) {
         // Enforce state interface, see definition below
                 
         var stateName = stateObj.GetName();
@@ -71,28 +71,28 @@ var StateMachine = {
        
         this.states[stateName] = stateObj;    
         return true;
-    },
+    }
 
-    OnUpdate: function(owner) {
+    OnUpdate(owner) {
         var stateObj = this.GetCurrentState(owner);
         if (stateObj != undefined) {
             stateObj.OnUpdate(owner, this);
         }
-    },
+    }
 
-    IsEntering: function(owner) {
+    IsEntering(owner) {
         var machineMemory = this.GetStateMachineMemory(owner);
         var isEntering = machineMemory.isEntering;
         return isEntering;
-    },
+    }
 
-    SetEntering: function(owner, value) {
+    SetEntering(owner, value) {
         var machineMemory = this.GetStateMachineMemory(owner);
         machineMemory.isEntering = value;
-    },
+    }
 
     // Returns true if change state request was successful
-    ChangeState: function(stateClass, owner) {
+    ChangeState(stateClass, owner) {
         var stateName = stateClass.name;
         var newState = this.states[stateName];
         if (newState == undefined) {        
@@ -135,15 +135,15 @@ var StateMachine = {
             }
             return false;
         }
-    },
+    }
 
-    IsBusy: function(owner) {
+    IsBusy(owner) {
         var stateObj = this.GetCurrentState(owner);
         if (obj != undefined) {
             return (!stateObj.CanExit(owner));
         }
         return false;
-    },
+    }
 };
 
 module.exports = StateMachine
