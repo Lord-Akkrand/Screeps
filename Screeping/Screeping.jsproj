@@ -53,6 +53,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="default\extend.creep.js" />
+    <Content Include="default\role.worker.statemachine.js" />
+    <Content Include="default\statemachine.state.js" />
+    <Content Include="default\statemachine.js" />
     <Content Include="default\role.worker.js" />
     <Content Include="default\caste.worker.js" />
     <Content Include="default\extend.controller.js" />

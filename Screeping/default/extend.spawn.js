@@ -19,6 +19,8 @@ StructureSpawn.prototype.initialise = function () {
 
 StructureSpawn.prototype.update = function ()
 {
+    if (this.spawning) { return; }
+
     var sources = this.room.getSources()
     var creepsInRoom = this.room.getCreepsInRoom()
     var myCreepsInRoom = creepsInRoom[FIND_MY_CREEPS]
