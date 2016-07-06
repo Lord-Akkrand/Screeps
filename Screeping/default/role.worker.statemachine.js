@@ -35,7 +35,7 @@ var CollectState = {
 var StateMachine = require('statemachine')
 var WorkerStateMachine = new StateMachine();
 WorkerStateMachine.OnInit('WorkerStateMachine');
-WorkerStateMachine.RegisterState(CollectState);
+WorkerStateMachine.RegisterState(CollectState, true);
 
 
 module.exports = WorkerStateMachine

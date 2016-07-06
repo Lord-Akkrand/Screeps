@@ -1,14 +1,11 @@
 // statemachine.js
-var State = require('statemachine.state');
 
 class StateMachine {
     
     OnInit(name) {
         this.stateMachineName = name;
         this.states = {};
-        
-        // Register 'nothing' state
-        this.RegisterState(State)
+        this.initialStateName = ''
     }
 
     IsCurrentState(stateClass, owner) {
@@ -28,7 +25,7 @@ class StateMachine {
         var stateMachinesMemory = this.GetStateMachinesMemory(owner);
         if (stateMachinesMemory[this.stateMachineName] == undefined) {
             stateMachinesMemory[this.stateMachineName] = {
-                currentStateName: '',
+                currentStateName: this.initialStateName,
                 isEntering: false,
                 states: {},
             };
@@ -60,16 +57,17 @@ class StateMachine {
         return this.states[stateName];
     }
 
-    RegisterState(stateObj, isAliasin) {
-        // Enforce state interface, see definition below
-                
+    RegisterState(stateObj, isInitialState) {
         var stateName = stateObj.GetName();
         if (this.states[stateName] != undefined) {
             console.log('State ' + stateName + ' already exists.');
             return false;
         }
        
-        this.states[stateName] = stateObj;    
+        this.states[stateName] = stateObj;
+        if (isInitialState) {
+            this.initialStateName = stateName;
+        }
         return true;
     }
 
