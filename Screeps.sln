@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "Screeping", "Screeping\Screeping.jsproj", "{BFE97B3E-A0E0-49A8-A89B-F6476E90D61E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A} = {E29DA2B0-9744-4B69-B02E-A59A1C606A1A}
+	EndProjectSection
+EndProject
+Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "AutoComplete", "..\AutoComplete\AutoComplete\AutoComplete.jsproj", "{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +46,30 @@ Global
 		{BFE97B3E-A0E0-49A8-A89B-F6476E90D61E}.Release|x86.ActiveCfg = Release|x86
 		{BFE97B3E-A0E0-49A8-A89B-F6476E90D61E}.Release|x86.Build.0 = Release|x86
 		{BFE97B3E-A0E0-49A8-A89B-F6476E90D61E}.Release|x86.Deploy.0 = Release|x86
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|ARM.Build.0 = Debug|ARM
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|ARM.Deploy.0 = Debug|ARM
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|x64.ActiveCfg = Debug|x64
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|x64.Build.0 = Debug|x64
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|x64.Deploy.0 = Debug|x64
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|x86.ActiveCfg = Debug|x86
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|x86.Build.0 = Debug|x86
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Debug|x86.Deploy.0 = Debug|x86
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|ARM.ActiveCfg = Release|ARM
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|ARM.Build.0 = Release|ARM
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|ARM.Deploy.0 = Release|ARM
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|x64.ActiveCfg = Release|x64
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|x64.Build.0 = Release|x64
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|x64.Deploy.0 = Release|x64
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|x86.ActiveCfg = Release|x86
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|x86.Build.0 = Release|x86
+		{E29DA2B0-9744-4B69-B02E-A59A1C606A1A}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

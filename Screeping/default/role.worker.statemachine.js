@@ -37,5 +37,4 @@ var WorkerStateMachine = new StateMachine();
 WorkerStateMachine.OnInit('WorkerStateMachine');
 WorkerStateMachine.RegisterState(CollectState, true);
 
-
 module.exports = WorkerStateMachine
