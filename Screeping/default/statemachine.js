@@ -3,7 +3,7 @@
 class StateMachine {
     
     OnInit(name) {
-        this.stateMachineName = name;
+        this.name = name;
         this.states = {};
         this.initialStateName = ''
     }
@@ -23,14 +23,14 @@ class StateMachine {
 
     GetStateMachineMemory(owner) {
         var stateMachinesMemory = this.GetStateMachinesMemory(owner);
-        if (stateMachinesMemory[this.stateMachineName] == undefined) {
-            stateMachinesMemory[this.stateMachineName] = {
+        if (stateMachinesMemory[this.name] == undefined) {
+            stateMachinesMemory[this.name] = {
                 currentStateName: this.initialStateName,
                 isEntering: false,
                 states: {},
             };
         }
-        return stateMachinesMemory[this.stateMachineName];
+        return stateMachinesMemory[this.name];
     }
 
     GetStateMemory(owner, stateName) {

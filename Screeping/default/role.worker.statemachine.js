@@ -14,7 +14,8 @@ var CollectState = {
     OnEnter: function(owner, stateMachine, previousState) {
     },
 
-    OnUpdate: function(owner, stateMachine) {
+    OnUpdate: function (owner, stateMachine) {
+        console.log(owner.name + ' in ' + this.name + ' of ' + stateMachine.name)
     },
 
     OnExit: function(owner, stateMachine, nextState) {
