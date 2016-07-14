@@ -44,9 +44,10 @@ StructureController.prototype.updateJobs = function (jobManager) {
         var fs = freeSpaces[i];
         // There should be an ongoing job to upgrade this controller from this location.
         var position = new RoomPosition(fs.X, fs.Y, fs.RoomName);
+        var controllerId = this.id
         var existingJob = jobs.find(function (job) {
             return job.JobType == 'UpgradeController'
-                && job.TargetId == this.id
+                && job.TargetId == controllerId
                 && JobFactory.GetPosition(job).isEqualTo(position);
         })
         if (existingJob == undefined) {
