@@ -17,6 +17,7 @@ StructureController.prototype.initialise = function () {
 
     Memory.controllers[this.id] = {
         FreeSpaces: fs,
+        Jobs: [],
     }
     console.log("Added memory for StructureController " + this.id + " in Room " + this.room.id)
     var fsMem =  Memory.controllers[this.id].FreeSpaces
@@ -58,7 +59,7 @@ StructureController.prototype.updateJobs = function (jobManager) {
     }
 }
 
-var controllerVersionNumber = 1
+var controllerVersionNumber = 2
 
 if (!Memory.controllerVersionNumber || Memory.controllerVersionNumber != controllerVersionNumber) {
     console.log('Initialising Source Memory ' + Memory.controllerVersionNumber + ' -> ' + controllerVersionNumber)
