@@ -33,7 +33,8 @@ Source.prototype.updateJobs = function(jobManager) {
     var memory = this.getMemory();
     var freeSpaces = memory.FreeSpaces;
     var jobs = memory.Jobs;
-    for (var i in fMem) {
+    for (var i in freeSpaces) {
+        var fs = freeSpaces[i]
         if (fs.ContainerId) {
             var container = Game.getObjectById(fs.ContainerId);
             // There should be an ongoing job to harvest into this container.
