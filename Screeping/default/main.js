@@ -7,6 +7,7 @@ require('main.init');
 require('main.garbagecollector');
 
 require('extend.room')
+require('extend.controller')
 require('extend.source')
 require('extend.spawn')
 require('extend.creep')

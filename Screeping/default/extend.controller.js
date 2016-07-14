@@ -12,25 +12,25 @@ var DebugLog = function(str)
 require('extend.pos')
 var JobFactory = require('job')
 
-RoomController.prototype.initialise = function () {
+StructureController.prototype.initialise = function () {
     var fs = this.pos.getFreeSpacesForMemory()
 
     Memory.controllers[this.id] = {
         FreeSpaces: fs,
     }
-    console.log("Added memory for RoomController " + this.id + " in Room " + this.room.id)
+    console.log("Added memory for StructureController " + this.id + " in Room " + this.room.id)
     var fsMem =  Memory.controllers[this.id].FreeSpaces
     for (var i in fsMem) {
         console.log(' fs ' + i + ' ' + fsMem[i])
     }
 }
 
-RoomController.prototype.update = function () {
+StructureController.prototype.update = function () {
     console.log('Source name ' + this.id)
 }
 
-RoomController.prototype.updateJobs = function (jobManager) {
-    console.log('RoomController name ' + this.id + ' Update Jobs.')
+StructureController.prototype.updateJobs = function (jobManager) {
+    console.log('StructureController name ' + this.id + ' Update Jobs.')
     var memory = this.getMemory();
     var freeSpaces = memory.FreeSpaces;
     var jobs = memory.Jobs;
