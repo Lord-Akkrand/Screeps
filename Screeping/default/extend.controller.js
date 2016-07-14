@@ -29,6 +29,11 @@ StructureController.prototype.update = function () {
     console.log('Source name ' + this.id)
 }
 
+StructureController.prototype.getMemory = function () {
+    return Memory.controllers[this.id];
+}
+
+
 StructureController.prototype.updateJobs = function (jobManager) {
     console.log('StructureController name ' + this.id + ' Update Jobs.')
     var memory = this.getMemory();
