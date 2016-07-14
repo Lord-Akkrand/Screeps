@@ -10,9 +10,10 @@ var DebugLog = function(str)
 }
 
 require('extend.pos')
+var JobFactory = require('job')
 
 RoomController.prototype.initialise = function () {
-    var fs = this.pos.getFreeSpaces()
+    var fs = this.pos.getFreeSpacesForMemory()
 
     Memory.controllers[this.id] = {
         FreeSpaces: fs,
@@ -28,7 +29,30 @@ RoomController.prototype.update = function () {
     console.log('Source name ' + this.id)
 }
 
-var controllerVersionNumber = 2
+RoomController.prototype.updateJobs = function (jobManager) {
+    console.log('RoomController name ' + this.id + ' Update Jobs.')
+    var memory = this.getMemory();
+    var freeSpaces = memory.FreeSpaces;
+    var jobs = memory.Jobs;
+    for (var i in fMem) {
+        // There should be an ongoing job to upgrade this controller from this location.
+        var position = new RoomPosition(fs.X, fs.Y, fs.RoomName);
+        var existingJob = jobs.find(function (job) {
+            return job.JobType == 'UpgradeController'
+                && job.TargetId == this.id
+                && JobFactory.GetPosition(job).isEqualTo(position);
+        })
+        if (existingJob == undefined) {
+            var newJob = JobFactory.CreateJob('UpgradeController', this.id, fs.ContainerId);
+            JobFactory.AddPosition(newJob, position);
+            JobFactory.SetBodyRequirements(newJob, [WORK, CARRY, MOVE]);
+            jobs.push(newJob);
+            jobManager.AddJob(newJob);
+        }
+    }
+}
+
+var controllerVersionNumber = 1
 
 if (!Memory.controllerVersionNumber || Memory.controllerVersionNumber != controllerVersionNumber) {
     console.log('Initialising Source Memory ' + Memory.controllerVersionNumber + ' -> ' + controllerVersionNumber)

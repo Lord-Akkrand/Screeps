@@ -10,13 +10,15 @@ var DebugLog = function(str)
 }
 
 require('extend.pos')
+var JobFactory = require('job')
 
 Source.prototype.initialise = function () {
-    var fs = this.pos.getFreeSpaces()
-
+    var fs = this.pos.getFreeSpacesForMemory()
+    
     Memory.sources[this.id] = {
         FreeSpaces: fs,
         Assigned: {},
+        Jobs:[]
     }
     this.calculateRequiredHarvesters();
     console.log("Added memory for Source " + this.id + " in Room " + this.room.id)
@@ -25,6 +27,44 @@ Source.prototype.initialise = function () {
         console.log(' fs ' + i + ' ' + fsMem[i])
     }
 }
+
+Source.prototype.updateJobs = function(jobManager) {
+    console.log('Source name ' + this.id + ' Update Jobs.')
+    var memory = this.getMemory();
+    var freeSpaces = memory.FreeSpaces;
+    var jobs = memory.Jobs;
+    for (var i in fMem) {
+        if (fs.ContainerId) {
+            var container = Game.getObjectById(fs.ContainerId);
+            // There should be an ongoing job to harvest into this container.
+            var existingJob = jobs.find(function (job) { return job.JobType == 'Harvest' && job.TargetId == fs.ContainerId; })
+            if (existingJob == undefined) {
+                var newJob = JobFactory.CreateJob('Harvest', this.id, fs.ContainerId);
+                JobFactory.SetBodyRequirements(newJob, [WORK, MOVE]);
+                jobs.push(newJob);
+                jobManager.AddJob(newJob);
+            }
+        }
+        else
+        {
+            var position = new RoomPosition(fs.X, fs.Y, fs.RoomName);
+            // There should be a job to create & build this container.
+            var createJob = jobs.find(function (job) {
+                return job.JobType == 'BuildStructure'
+                    && job.TargetId == 'Container'
+                    && JobFactory.GetPosition(job).isEqualTo(position);
+            });
+            if (existingJob == undefined) {
+                var newJob = JobFactory.CreateJob('BuildStructure', this.id, 'Container');
+                JobFactory.AddPosition(newJob, position);
+                JobFactory.SetBodyRequirements(newJob, [WORK, CARRY, MOVE]);
+                jobs.push(newJob);
+                jobManager.AddJob(newJob);
+            }
+        }
+    }
+}
+
 
 Source.prototype.update = function() {
     console.log('Source name ' + this.id)
@@ -72,9 +112,19 @@ Source.prototype.garbagecollector = function () {
             delete mem.Assigned[creep];
         }
     }
+
+    var freeSpaces = mem.FreeSpaces;
+    for (var i in fsMem) {
+        if (fs.ContainerId) {
+            var container = Game.getObjectById(fs.ContainerId);
+            if (container == undefined) {
+                fs.Container = undefined;
+            }
+        }
+    }
 }
 
-var sourceVersionNumber = 2
+var sourceVersionNumber = 1
 
 if (!Memory.sourceVersionNumber || Memory.sourceVersionNumber != sourceVersionNumber) {
     console.log('Initialising Source Memory ' + Memory.sourceVersionNumber + ' -> ' + sourceVersionNumber)

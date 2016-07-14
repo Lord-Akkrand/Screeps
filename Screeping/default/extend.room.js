@@ -9,29 +9,73 @@ var DebugLog = function(str)
     }
 }
 
+// Each creep in the room is assigned a protocol (that shold be compatible with their caste and role)
+var Protocols = [
+    ['UpgradeController', 'FillSpawn'],
+    ['BuildContainers', 'BuildExtensions'],
+    ['BuildRoads', 'RepairRoads'],
+    ['BuildWalls', 'BuildRamparts', 'RepairWalls']
+]
+
 var Role = require('role')
+var JobManager = require('jobmanager')
 
 Room.prototype.initialise = function () {
     var mem = {
         Sources: [],
-    }
+    };
     var sources = this.find(FIND_SOURCES);
     for (var i in sources) {
         var source = sources[i];
         var id = source.id;
         mem.Sources.push(id);
     }
-    Memory.rooms[this.name] = mem
-    console.log("Added memory for Room " + room.name)
+    Memory.rooms[this.name] = mem;
+    console.log("Added memory for Room " + room.name);
 }
 
 Room.prototype.update = function () {
-    console.log('Room name ' + this.name)
-    this.updateCreepsInRoom()
+    console.log('Room name ' + this.name);
+    this.updateJobsInRoom();
+    this.updateCreepsInRoom();
+    this.jobManager.OnUpdate();
+}
+
+Room.prototype.updateJobsInRoom = function() {
+    var controller = room.controller;
+    if (controller.my) {
+        controller.updateJobsInRoom(this.jobManager);
+
+        var sources = this.getSources();
+        for (var i in sources) {
+            var source = Game.getObjectById(sources[i]);
+            source.updateJobsInRoom(this.JobManager)
+        }
+    }
 }
 
 Room.prototype.getMemory = function () {
     return Memory.rooms[this.name];
+}
+
+Room.prototype.getAssigned = function (protocol) {
+    var mem = this.getMemory();
+    var count = 0;
+    for (var creep in mem.Assigned) {
+        if (mem.Assigned[creep] == protocol) {
+            count++;
+        }
+    }
+    return count;
+}
+
+Room.prototype.assign = function (creep, protocol) {
+    var mem = this.getMemory();
+    mem.Assigned[creep.name] = protocol;
+}
+
+Room.prototype.unassign = function (creep) {
+    this.assign(creep, undefined);
 }
 
 Room.prototype.calculateCreepRequirements = function () {
@@ -43,8 +87,8 @@ Room.prototype.calculateCreepRequirements = function () {
     for (var i in roles) {
         mem.RequiredCreeps[roles[i]] = 0;
     }
-    // Always at least one worker
-    mem.RequiredCreeps['Worker'] = 1;
+    // Always at least two workers (one for the controller, one for the spawn)
+    mem.RequiredCreeps['Worker'] = 2;
     for (var i in sources) {
         console.log(i + ' ' + sources[i])
         var source = Game.getObjectById(sources[i]);
@@ -96,7 +140,12 @@ Room.prototype.getSources = function () {
     return mem.Sources
 }
 
-var roomVersionNumber = 3
+Room.prototype.initialiseJobManager = function () {
+    this.jobManager = new JobManager();
+    this.jobManager.OnInit(this);
+}
+
+var roomVersionNumber = 1
 
 if (!Memory.roomVersionNumber || Memory.roomVersionNumber != roomVersionNumber) {
     console.log('Initialising Room Memory ' + Memory.roomVersionNumber + ' -> ' + roomVersionNumber)
@@ -113,4 +162,14 @@ if (!Memory.roomVersionNumber || Memory.roomVersionNumber != roomVersionNumber) 
     }
     // Set the initialization flag
     Memory.roomVersionNumber = roomVersionNumber;
+}
+
+// Every tick, create the job manager for each room 
+// (not too expensive as there's nowhere near as many rooms as creeps) 
+for (var i in Game.rooms) {
+    var room = Game.rooms[i];
+    var controller = room.controller
+    if (controller && controller.my) {
+        room.initialiseJobManager();
+    }
 }

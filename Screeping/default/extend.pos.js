@@ -38,3 +38,13 @@ RoomPosition.prototype.getFreeSpaces = function () {
     }
     return freeSpaces;
 }
+
+RoomPosition.prototype.getFreeSpacesForMemory = function () {
+    var freeSpaces = this.getFreeSpaces();
+    var fsMem = []
+    for (var i in freeSpaces) {
+        var fs = freeSpaces[i];
+        fsMem.push({ RoomName: this.roomName, X: fs.x, Y: fs.y });
+    }
+    return fsMem;
+}

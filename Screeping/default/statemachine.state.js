@@ -19,7 +19,7 @@ var State = {
         return this.name;
     },
 
-    OnEnter: function(owner, stateMachine, previousState) {
+    OnEnter: function(owner, stateMachine, previousState, data) {
     },
 
     OnUpdate: function(owner, stateMachine) {

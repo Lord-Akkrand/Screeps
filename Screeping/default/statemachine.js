@@ -34,12 +34,22 @@ class StateMachine {
     }
 
     GetStateMemory(owner, stateName) {
+        if (stateName == undefined) {
+            // if you don't provide a stateName, it assumes you want the current state memory
+            var currentState = this.GetCurrentState()
+            stateName = currentState.GetName();
+        }
         var machineMemory = this.GetStateMachineMemory();
         if (machineMemory.states[stateName] == undefined) {
             var state = this.GetState(stateName);
             machineMemory.states[stateName] = state.InitMemory();
         }
         return machineMemory.states[stateName];
+    }
+
+    ClearStateMemory(owner, stateName) {
+        var machineMemory = this.GetStateMachineMemory();
+        machineMemory.states[stateName] = undefined;
     }
 
     GetCurrentState(owner) {
@@ -90,7 +100,7 @@ class StateMachine {
     }
 
     // Returns true if change state request was successful
-    ChangeState(stateClass, owner) {
+    ChangeState(stateClass, owner, data) {
         var stateName = stateClass.name;
         var newState = this.states[stateName];
         if (newState == undefined) {        
@@ -113,6 +123,7 @@ class StateMachine {
                         this.SetEntering(owner, true);
                         // call on exit of current state
                         currState.OnExit(owner, this, newState);
+                        this.ClearStateMemory(owner, currState.GetName());
                         bEnterNewState = true;
                     }
                     else {
@@ -125,7 +136,7 @@ class StateMachine {
                         var prevState = currState;
                         this.SetCurrentStateName(owner, stateName);
                         currState = this.GetCurrentState(owner);
-                        currState.OnEnter(owner, this, prevStat);
+                        currState.OnEnter(owner, this, prevStat, data);
                         this.SetEntering(owner, false);
                         return true;
                     }
