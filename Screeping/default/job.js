@@ -2,7 +2,7 @@
 
 var JobFactory = {
     CreateJob: function (jobType, ownerId, targetId) {
-        return { JobType: jobtype, OwnerId: ownerId, TargetId: targetId, BodyRequirements: [], Priority: [0,0] };
+        return { JobType: jobType, OwnerId: ownerId, TargetId: targetId, BodyRequirements: [], Priority: [0, 0] };
     },
 
     SetBodyRequirements: function(job, parts) {
