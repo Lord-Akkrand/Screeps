@@ -39,7 +39,7 @@ StructureController.prototype.updateJobs = function (jobManager) {
     var memory = this.getMemory();
     var freeSpaces = memory.FreeSpaces;
     var jobs = memory.Jobs;
-    for (var i in fMem) {
+    for (var i in freeSpaces) {
         // There should be an ongoing job to upgrade this controller from this location.
         var position = new RoomPosition(fs.X, fs.Y, fs.RoomName);
         var existingJob = jobs.find(function (job) {
