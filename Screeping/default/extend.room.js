@@ -44,7 +44,7 @@ Room.prototype.update = function () {
 Room.prototype.updateJobsInRoom = function() {
     var controller = room.controller;
     if (controller.my) {
-        controller.updateJobsInRoom(this.jobManager);
+        controller.updateJobs(this.jobManager);
 
         var sources = this.getSources();
         for (var i in sources) {
