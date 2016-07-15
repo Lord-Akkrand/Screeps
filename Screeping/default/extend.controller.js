@@ -54,7 +54,7 @@ StructureController.prototype.updateJobs = function (jobManager) {
                 && job.Position.RoomName == fs.RoomName;
         })
         if (existingJob == undefined) {
-            var newJob = JobFactory.CreateJob('UpgradeController', controllerId, undefnined);
+            var newJob = JobFactory.CreateJob('UpgradeController', controllerId, undefined);
             JobFactory.AddPosition(newJob, position);
             JobFactory.SetBodyRequirements(newJob, [WORK, CARRY, MOVE]);
             jobs.push(newJob);
