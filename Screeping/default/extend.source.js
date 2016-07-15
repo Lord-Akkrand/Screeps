@@ -38,7 +38,10 @@ Source.prototype.updateJobs = function(jobManager) {
         if (fs.ContainerId) {
             var container = Game.getObjectById(fs.ContainerId);
             // There should be an ongoing job to harvest into this container.
-            var existingJob = jobs.find(function (job) { return job.JobType == 'Harvest' && job.TargetId == fs.ContainerId; })
+            var existingJob = jobs.find(function (job) {
+                return job.JobType == 'Harvest'
+                    && job.TargetId == fs.ContainerId;
+            })
             if (existingJob == undefined) {
                 var newJob = JobFactory.CreateJob('Harvest', this.id, fs.ContainerId);
                 JobFactory.SetBodyRequirements(newJob, [WORK, MOVE]);
@@ -50,7 +53,7 @@ Source.prototype.updateJobs = function(jobManager) {
         {
             var position = new RoomPosition(fs.X, fs.Y, fs.RoomName);
             // There should be a job to create & build this container.
-            var createJob = jobs.find(function (job) {
+            var existingJob = jobs.find(function (job) {
                 return job.JobType == 'BuildStructure'
                     && job.TargetId == 'Container'
                     && job.Position.X == fs.X
