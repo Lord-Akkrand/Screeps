@@ -48,7 +48,10 @@ StructureController.prototype.updateJobs = function (jobManager) {
         var existingJob = jobs.find(function (job) {
             return job.JobType == 'UpgradeController'
                 && job.TargetId == controllerId
-                && JobFactory.GetPosition(job).isEqualTo(position);
+                && job.Position.X == position.x
+                && job.Position.Y == position.y
+                && job.Position.Z == position.z
+                && job.Position.RoomName == position.roomName;
         })
         if (existingJob == undefined) {
             var newJob = JobFactory.CreateJob('UpgradeController', this.id, fs.ContainerId);

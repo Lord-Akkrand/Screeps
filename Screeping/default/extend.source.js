@@ -53,7 +53,10 @@ Source.prototype.updateJobs = function(jobManager) {
             var createJob = jobs.find(function (job) {
                 return job.JobType == 'BuildStructure'
                     && job.TargetId == 'Container'
-                    && JobFactory.GetPosition(job).isEqualTo(position);
+                    && job.Position.X == position.x
+                    && job.Position.Y == position.y
+                    && job.Position.Z == position.z
+                    && job.Position.RoomName == position.roomName;
             });
             if (existingJob == undefined) {
                 var newJob = JobFactory.CreateJob('BuildStructure', this.id, 'Container');

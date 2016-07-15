@@ -53,10 +53,14 @@ var JobFactory = {
     },
 
     AddPosition: function(job, roomPosition) {
-        job.Position = {X:roomPosition.x, Y: roomPosition.y, RoomName:roomPosition.roomName};
+        job.Position = { X: roomPosition.x, Y: roomPosition.y, RoomName: roomPosition.roomName };
     },
 
     GetPosition: function (job) {
+        return job.Position;
+    }
+
+    GetRoomPosition: function (job) {
         return new RoomPosition(job.Position.X, job.Position.Y, job.Position.RoomName);
     }
 };
