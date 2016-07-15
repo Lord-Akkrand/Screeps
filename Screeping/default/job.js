@@ -58,11 +58,11 @@ var JobFactory = {
 
     GetPosition: function (job) {
         return job.Position;
-    }
+    },
 
     GetRoomPosition: function (job) {
         return new RoomPosition(job.Position.X, job.Position.Y, job.Position.RoomName);
-    }
+    },
 };
 
 module.exports = JobFactory
