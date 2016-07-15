@@ -53,10 +53,10 @@ Source.prototype.updateJobs = function(jobManager) {
             var createJob = jobs.find(function (job) {
                 return job.JobType == 'BuildStructure'
                     && job.TargetId == 'Container'
-                    && job.Position.X == position.x
-                    && job.Position.Y == position.y
-                    && job.Position.Z == position.z
-                    && job.Position.RoomName == position.roomName;
+                    && job.Position.X == fs.X
+                    && job.Position.Y == fs.Y
+                    && job.Position.Z == fs.Z
+                    && job.Position.RoomName == fs.RoomName;
             });
             if (existingJob == undefined) {
                 var newJob = JobFactory.CreateJob('BuildStructure', this.id, 'Container');

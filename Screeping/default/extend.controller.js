@@ -47,14 +47,14 @@ StructureController.prototype.updateJobs = function (jobManager) {
         var controllerId = this.id
         var existingJob = jobs.find(function (job) {
             return job.JobType == 'UpgradeController'
-                && job.TargetId == controllerId
-                && job.Position.X == position.x
-                && job.Position.Y == position.y
-                && job.Position.Z == position.z
-                && job.Position.RoomName == position.roomName;
+                && job.OwnerId == controllerId
+                && job.Position.X == fs.X
+                && job.Position.Y == fs.Y
+                && job.Position.Z == fs.Z
+                && job.Position.RoomName == fs.RoomName;
         })
         if (existingJob == undefined) {
-            var newJob = JobFactory.CreateJob('UpgradeController', this.id, fs.ContainerId);
+            var newJob = JobFactory.CreateJob('UpgradeController', controllerId, undefnined);
             JobFactory.AddPosition(newJob, position);
             JobFactory.SetBodyRequirements(newJob, [WORK, CARRY, MOVE]);
             jobs.push(newJob);
