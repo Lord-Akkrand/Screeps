@@ -1,5 +1,7 @@
 // jobmanager.js
 
+var JobFactory = require('job');
+
 class JobManager {
     OnInit(owner) {
         this.owner = owner;
@@ -33,7 +35,53 @@ class JobManager {
     }
 
     OnUpdate() {
-        
+        // sort the job queue
+        var queue = this.GetJobQueue();
+        queue.sort(function (a, b) {
+            return JobFactory.Compare(a, b);
+        });
+
+        // requests only last a frame, so they'll all be deleted
+        var requests = this.GetJobRequests();
+        for (var i in requests) {
+            var request = requests[i];
+            var creep = Game.getObjectById(request);
+            console.log(creep + ' has a job request.')
+            for (var j in queue) {
+                var job = queue[j];
+                console.log(' -> checking job ' + i + ' in the queue.')
+                var requirements = JobFactory.MeetsRequirements(job, creep);
+                console.log(' -> requirements fit ' + requirements)
+                var fitEmptyJob = job.Assigned == undefined && (requirements == JobFactory.RequirementsSucess || requirements == JobFactory.RequirementsOverqualified);
+                var replaceAssignedJob = job.Assigned && job.AssignedQuality < requirements;
+                var assignToCreep = fitEmptyJob || replaceAssignedJob;
+                console.log(' -> fitEmptyJob ? <' + fitEmptyJob + '> replaceAssignedJob ? <' + replaceAssignedJob + '>')
+                if (assignToCreep) {
+                    console.log(' -> assign the job.')
+                    // No one is doing this, and you can do it.
+                    // Or, someone is doing it, and you can do it better.
+                    if (job.Assigned) {
+                        console.log(' -> job was already assigned to ' + job.Assigned)
+
+                        // Unassign the creep currently doing it, then add a request for them to get a new job.
+                        var assignedCreep = Game.getObjectById(job.Assigned);
+                        assignedCreep.unassignJob();
+                        JobFactory.Unassign(job);
+                        requests.push({ CreepId: job.Assigned });
+                    }
+
+                    // assign the job to the creep, and stop looking for jobs for this creep.
+                    JobFactory.Assign(job, creep);
+                    break;
+                }
+            }
+        }
+        this.ClearRequests();
+    }
+
+    ClearRequests() {
+        var memory = this.GetMemory();
+        memory.Requests = []
     }
 
     RequestJob(creep) {

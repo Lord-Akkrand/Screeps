@@ -61,6 +61,7 @@ Source.prototype.updateJobs = function(jobManager) {
                     && job.Position.Z == fs.Z
                     && job.Position.RoomName == fs.RoomName;
             });
+
             if (existingJob == undefined) {
                 var newJob = JobFactory.CreateJob('BuildStructure', this.id, 'Container');
                 JobFactory.AddPosition(newJob, position);

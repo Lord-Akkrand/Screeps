@@ -118,6 +118,10 @@ Room.prototype.updateCreepsInRoom = function () {
         allCreeps.push(creepName);
         if (creep.my) {
             myCreeps.push(creepName);
+            if (creep.getJob() == undefined) {
+                console.log(creepName + ' has no job.  Requesting one.');
+                this.jobManager.RequestJob(creep);
+            }
         }
         else {
             hostileCreeps.push(creepName);

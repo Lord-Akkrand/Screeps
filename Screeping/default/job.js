@@ -24,8 +24,9 @@ var JobFactory = {
     },
 
     RequirementsFailure: 0,
-    RequirementsSucess: 1,
-    RequirementsOverqualified: 2,
+    RequirementsOverqualified: 1,
+    RequirementsSucess: 2,
+    
 
     MeetsRequirements: function(job, creep) {
         var creepRemaining = creep.body.slice(0);
@@ -62,6 +63,17 @@ var JobFactory = {
 
     GetRoomPosition: function (job) {
         return new RoomPosition(job.Position.X, job.Position.Y, job.Position.RoomName);
+    },
+
+    Assign: function (job, creep) {
+        job.Assign = creep.id;
+        creep.assignJob(job);
+    },
+
+    Unassign: function (job) {
+        var creepId = job.Assign;
+        job.Assign = undefined;
+        return creepId;
     },
 };
 
