@@ -9,10 +9,10 @@ var JobFactory = {
         job.BodyRequirements = parts;
     },
 
-    Compare: function (jobaA, jobB) {
+    Compare: function (jobA, jobB) {
         var priorityA = jobA.Priority
         var priorityB = jobB.Priority
-        for (tier in priorityA) {
+        for (var tier in priorityA) {
             var valueA = priorityA[tier];
             var valueB = priorityB[tier];
             var diff = valueA - valueB;
@@ -33,7 +33,7 @@ var JobFactory = {
         var requirements = job.BodyRequirements.slice(0);
         for (var i in requirements) {
             var requirement = requirements[i];
-            var hasRequirement = creepsRemaining.find(function (bodyPart) {
+            var hasRequirement = creepRemaining.find(function (bodyPart) {
                 return bodyPart.type == requirement;
             });
             if (hasRequirement == undefined) {

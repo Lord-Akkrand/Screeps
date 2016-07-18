@@ -45,7 +45,7 @@ class JobManager {
         var requests = this.GetJobRequests();
         for (var i in requests) {
             var request = requests[i];
-            var creep = Game.getObjectById(request);
+            var creep = Game.creeps[request];
             console.log(creep + ' has a job request.')
             for (var j in queue) {
                 var job = queue[j];
