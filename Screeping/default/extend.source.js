@@ -33,7 +33,12 @@ Source.prototype.updateJobs = function(jobManager) {
     var memory = this.getMemory();
     var freeSpaces = memory.FreeSpaces;
     var jobs = memory.Jobs;
+
+    var majorPriority = 0
+    
     for (var i in freeSpaces) {
+        var minorPriority = (i * 2) + 1;
+
         var fs = freeSpaces[i]
         if (fs.ContainerId) {
             var container = Game.getObjectById(fs.ContainerId);
@@ -45,6 +50,7 @@ Source.prototype.updateJobs = function(jobManager) {
             if (existingJob == undefined) {
                 var newJob = JobFactory.CreateJob('Harvest', this.id, fs.ContainerId);
                 JobFactory.SetBodyRequirements(newJob, [WORK, MOVE]);
+                JobFactory.SetPriority(newJob, [majorPriority, minorPriority]);
                 jobs.push(newJob);
                 jobManager.AddJob(newJob);
             }

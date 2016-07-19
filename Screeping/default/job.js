@@ -9,6 +9,10 @@ var JobFactory = {
         job.BodyRequirements = parts;
     },
 
+    SetPriority: function(job, priority) {
+        job.Priority = priority;
+    },
+
     Compare: function (jobA, jobB) {
         var priorityA = jobA.Priority
         var priorityB = jobB.Priority

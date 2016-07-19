@@ -49,7 +49,7 @@ class JobManager {
             console.log(creep + ' has a job request.')
             for (var j in queue) {
                 var job = queue[j];
-                console.log(' -> checking job ' + i + ' in the queue.')
+                console.log(' -> checking job ' + j + ' in the queue.')
                 var requirements = JobFactory.MeetsRequirements(job, creep);
                 console.log(' -> requirements fit ' + requirements)
                 var fitEmptyJob = job.Assigned == undefined && (requirements == JobFactory.RequirementsSucess || requirements == JobFactory.RequirementsOverqualified);
