@@ -1,10 +1,8 @@
 // extend.room.js
 
 var logThis = false
-var DebugLog = function(str)
-{
-    if (logThis)
-    {
+var DebugLog = function(str) {
+    if (logThis) {
         console.log(str)
     }
 }
@@ -15,7 +13,7 @@ var Protocols = [
     ['BuildContainers', 'BuildExtensions'],
     ['BuildRoads', 'RepairRoads'],
     ['BuildWalls', 'BuildRamparts', 'RepairWalls']
-]
+];
 
 var Role = require('role')
 var JobManager = require('jobmanager')

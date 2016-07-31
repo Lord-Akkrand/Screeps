@@ -44,9 +44,10 @@ class JobManager {
                 var assignedCreep = Game.getObjectById(currentlyAssigned);
                 if (assignedCreep == undefined) {
                     console.log('JobManager:OnUpdate() found a job (' + job.JobType + ') assigned to <' + currentlyAssigned + '>, who cannot be found.  Unassigning job.');
-                    job.Assigned = undefined;    
+                    job.Assigned = undefined;
                 }
             }
+        }
         // sort the job queue
         queue.sort(function (a, b) {
             return JobFactory.Compare(a, b);

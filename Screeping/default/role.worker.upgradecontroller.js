@@ -28,7 +28,8 @@ var UpgradeControllerStates = {
                     stateMachine.ChangeState(UpgradeControllerStates.MoveToController, owner, undefined);
                 }
                 else {
-                    
+                    console.log('->Has ' + owner.carry.energy + ' energy.  Moving to gather energy.');
+                    stateMachine.ChangeState(UpgradeControllerStates.GatherEnergy, owner, undefined);
                 }
             }
             else {
@@ -115,7 +116,6 @@ var UpgradeControllerStates = {
             var job = creepMem.Job;
             if (job) {
                 console.log(owner.name + ' has a job of type ' + job.JobType + '.');
-                
             }
             else {
                 console.log('->Has no Job.  Cannot perform this state without one.')

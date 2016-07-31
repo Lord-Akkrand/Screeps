@@ -28,7 +28,8 @@ var WorkerHubState = {
         if (job) {
             var jobHubState = WorkerHubJobStates[job.JobType];
             if (jobHubState) {
-                console.log('->Has a Job of type <' + job.JobType + '>. Entering new hub state.');
+                console.log(JSON.stringify(job));
+                console.log('->Has a Job of type <' + JSON.stringify(job.JobType) + '>. Entering new hub state.');
                 stateMachine.ChangeState(jobHubState, owner, undefined);
             }
             else {

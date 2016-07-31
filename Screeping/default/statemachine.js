@@ -39,7 +39,7 @@ class StateMachine {
             var currentState = this.GetCurrentState()
             stateName = currentState.GetName();
         }
-        var machineMemory = this.GetStateMachineMemory();
+        var machineMemory = this.GetStateMachineMemory(owner);
         if (machineMemory.states[stateName] == undefined) {
             var state = this.GetState(stateName);
             machineMemory.states[stateName] = state.InitMemory();
@@ -48,7 +48,7 @@ class StateMachine {
     }
 
     ClearStateMemory(owner, stateName) {
-        var machineMemory = this.GetStateMachineMemory();
+        var machineMemory = this.GetStateMachineMemory(owner);
         machineMemory.states[stateName] = undefined;
     }
 
@@ -91,6 +91,7 @@ class StateMachine {
     IsEntering(owner) {
         var machineMemory = this.GetStateMachineMemory(owner);
         var isEntering = machineMemory.isEntering;
+        console.log('isEntering is ' + JSON.stringify(machineMemory));
         return isEntering;
     }
 
@@ -102,6 +103,7 @@ class StateMachine {
     // Returns true if change state request was successful
     ChangeState(stateClass, owner, data) {
         var stateName = stateClass.name;
+        console.log('entering new stateName ' + stateName)
         var newState = this.states[stateName];
         if (newState == undefined) {        
             console.log("Failed to change state, unknown || unregistered state class: " + stateName + ", provided to StateMachine: " + this.name);
@@ -120,10 +122,15 @@ class StateMachine {
                     if (currState.CanExit(owner, this)) {
                         // before we exit the current state, set a flag to indicate we are trying to enter a new state
                         // this way we can catch same frame multi state transition, && stop it.
+                        console.log('calling SetEntering as we exit the old state ' + currState.name)
                         this.SetEntering(owner, true);
                         // call on exit of current state
                         currState.OnExit(owner, this, newState);
+                        console.log('OnExit done for' + currState.name)
+                        this.SetEntering(owner, false);
+                        console.log('entering set false')
                         this.ClearStateMemory(owner, currState.GetName());
+                        console.log('state memory cleared')
                         bEnterNewState = true;
                     }
                     else {
@@ -133,10 +140,12 @@ class StateMachine {
                     if (bEnterNewState) {
                         // enter the new state
                         this.SetEntering(owner, true);
+                        console.log('entering new state ' + stateName);
                         var prevState = currState;
                         this.SetCurrentStateName(owner, stateName);
                         currState = this.GetCurrentState(owner);
-                        currState.OnEnter(owner, this, prevStat, data);
+                        currState.OnEnter(owner, this, prevState, data);
+                        console.log('entered new state ' + stateName);
                         this.SetEntering(owner, false);
                         return true;
                     }
