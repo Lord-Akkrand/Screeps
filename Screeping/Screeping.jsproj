@@ -54,6 +54,7 @@
   <ItemGroup>
     <Content Include="default\extend.creep.js" />
     <Content Include="default\job.js" />
+    <Content Include="default\role.worker.upgradecontroller.js" />
     <Content Include="default\role.worker.statemachine.js" />
     <Content Include="default\jobmanager.js" />
     <Content Include="default\statemachine.state.js" />

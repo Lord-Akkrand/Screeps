@@ -1,5 +1,10 @@
 // role.worker.statemachine.js
 
+var UpgradeControllerStates = require('role.worker.upgradecontroller');
+
+var WorkerHubJobStates = {
+    UpgradeController: UpgradeControllerStates.HubState,
+};
 
 var WorkerHubState = {
     name: 'WorkerHubState',
@@ -18,15 +23,25 @@ var WorkerHubState = {
 
     OnUpdate: function (owner, stateMachine) {
         console.log(owner.name + ' in ' + this.name + ' of ' + stateMachine.name)
-        var room = owner.room;
-        var sources = room.getSources();
-        for (var i in sources) {
-            var source = Game.getObjectById(sources[i]);
-            var assigned = source.getAssigned()
+        var creepMem = owner.getMemory();
+        var job = creepMem.Job;
+        if (job) {
+            var jobHubState = WorkerHubJobStates[job.JobType];
+            if (jobHubState) {
+                console.log('->Has a Job of type <' + job.JobType + '>. Entering new hub state.');
+                stateMachine.ChangeState(jobHubState, owner, undefined);
+            }
+            else {
+                console.log('->Has a Job of type <' + job.JobType + '>. There is no hub state defined.  ' + owner.name + ' is frustrated.');
+            }
+        }
+        else {
+            console.log('->Has no Job.  Is bored.')
         }
     },
 
-    OnExit: function(owner, stateMachine, nextState) {
+    OnExit: function (owner, stateMachine, nextState) {
+        console.log(owner.name + ' leaving ' + this.name + ' of ' + stateMachine.name + '.  Next state is ' + nextState.name)
     },
 
     // Override these Can* functions to provide further control on how other states
@@ -44,5 +59,10 @@ var StateMachine = require('statemachine')
 var WorkerStateMachine = new StateMachine();
 WorkerStateMachine.OnInit('WorkerStateMachine');
 WorkerStateMachine.RegisterState(WorkerHubState, true);
+
+for (var i in UpgradeControllerStates) {
+    var state = RoleUpgraderStates[i];
+    WorkerStateMachine.RegisterState(state);
+}
 
 module.exports = WorkerStateMachine

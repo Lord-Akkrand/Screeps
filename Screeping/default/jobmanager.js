@@ -35,8 +35,19 @@ class JobManager {
     }
 
     OnUpdate() {
-        // sort the job queue
+        // Check for any assigned jobs that don't have matching creeps (they're dead?)
         var queue = this.GetJobQueue();
+        for (var j in queue) {
+            var job = queue[j];
+            var currentlyAssigned = job.Assigned;
+            if (currentlyAssigned != undefined) {
+                var assignedCreep = Game.getObjectById(currentlyAssigned);
+                if (assignedCreep == undefined) {
+                    console.log('JobManager:OnUpdate() found a job (' + job.JobType + ') assigned to <' + currentlyAssigned + '>, who cannot be found.  Unassigning job.');
+                    job.Assigned = undefined;    
+                }
+            }
+        // sort the job queue
         queue.sort(function (a, b) {
             return JobFactory.Compare(a, b);
         });

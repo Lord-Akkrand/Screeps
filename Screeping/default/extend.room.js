@@ -49,7 +49,7 @@ Room.prototype.updateJobsInRoom = function() {
         var sources = this.getSources();
         for (var i in sources) {
             var source = Game.getObjectById(sources[i]);
-            source.updateJobs(this.jobManager)
+            source.updateJobs(this.jobManager, i)
         }
     }
 }

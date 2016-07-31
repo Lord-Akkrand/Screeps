@@ -40,10 +40,12 @@ StructureController.prototype.updateJobs = function (jobManager) {
     var memory = this.getMemory();
     var freeSpaces = memory.FreeSpaces;
     var jobs = memory.Jobs;
-    var majorPriority = 0
-    
+    var majorPriority = 0;
+    var controllerPriority = 0;
+
     for (var i in freeSpaces) {
         var minorPriority = i * 2;
+        console.log(' controller freespaces ' + i + ' makes minorPriority of ' + minorPriority)
         var fs = freeSpaces[i];
         // There should be an ongoing job to upgrade this controller from this location.
         var position = new RoomPosition(fs.X, fs.Y, fs.RoomName);
@@ -60,7 +62,7 @@ StructureController.prototype.updateJobs = function (jobManager) {
             var newJob = JobFactory.CreateJob('UpgradeController', controllerId, undefined);
             JobFactory.AddPosition(newJob, position);
             JobFactory.SetBodyRequirements(newJob, [WORK, CARRY, MOVE]);
-            JobFactory.SetPriority(newJob, [majorPriority, minorPriority]);
+            JobFactory.SetPriority(newJob, [majorPriority, controllerPriority, minorPriority]);
             jobs.push(newJob);
             jobManager.AddJob(newJob);
         }

@@ -10,6 +10,10 @@
 // Cleanup dead creeps
 for (var name in Memory.creeps) {
     if (!Game.creeps[name]) {
+        var creepMemory = Memory.creeps[name];
+        if (creepMemory.Job) {
+            creepMemory.Job.Assign = undefined;
+        }
         delete Memory.creeps[name];
     }
 }

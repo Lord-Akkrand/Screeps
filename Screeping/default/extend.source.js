@@ -28,16 +28,17 @@ Source.prototype.initialise = function () {
     }
 }
 
-Source.prototype.updateJobs = function(jobManager) {
+Source.prototype.updateJobs = function(jobManager, sourceIndex) {
     console.log('Source name ' + this.id + ' Update Jobs.')
     var memory = this.getMemory();
     var freeSpaces = memory.FreeSpaces;
     var jobs = memory.Jobs;
 
     var majorPriority = 0
-    
+    var sourcePriority = sourceIndex * 2
     for (var i in freeSpaces) {
         var minorPriority = (i * 2) + 1;
+        console.log(' source ' + sourceIndex + ' has sourcePriority of ' + sourcePriority + ', freespaces ' + i + ' makes minorPriority of ' + minorPriority)
 
         var fs = freeSpaces[i]
         if (fs.ContainerId) {
@@ -50,7 +51,7 @@ Source.prototype.updateJobs = function(jobManager) {
             if (existingJob == undefined) {
                 var newJob = JobFactory.CreateJob('Harvest', this.id, fs.ContainerId);
                 JobFactory.SetBodyRequirements(newJob, [WORK, MOVE]);
-                JobFactory.SetPriority(newJob, [majorPriority, minorPriority]);
+                JobFactory.SetPriority(newJob, [majorPriority, sourcePriority, minorPriority]);
                 jobs.push(newJob);
                 jobManager.AddJob(newJob);
             }
@@ -72,6 +73,7 @@ Source.prototype.updateJobs = function(jobManager) {
                 var newJob = JobFactory.CreateJob('BuildStructure', this.id, 'Container');
                 JobFactory.AddPosition(newJob, position);
                 JobFactory.SetBodyRequirements(newJob, [WORK, CARRY, MOVE]);
+                JobFactory.SetPriority(newJob, [majorPriority, sourcePriority, minorPriority]);
                 jobs.push(newJob);
                 jobManager.AddJob(newJob);
             }
