@@ -61,7 +61,7 @@ WorkerStateMachine.OnInit('WorkerStateMachine');
 WorkerStateMachine.RegisterState(WorkerHubState, true);
 
 for (var i in UpgradeControllerStates) {
-    var state = RoleUpgraderStates[i];
+    var state = UpgradeControllerStates[i];
     WorkerStateMachine.RegisterState(state);
 }
 
