@@ -71,8 +71,16 @@ var UpgradeControllerStates = {
             var job = creepMem.Job;
             if (job) {
                 console.log(owner.name + ' has a job of type ' + job.JobType + '.');
-                if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(creep.room.controller);
+                if (owner.carry.energy <= 0) {
+                    console.log('->Has ' + owner.carry.energy + ' energy.  Moving to gather energy.');
+                    stateMachine.ChangeState(UpgradeControllerStates.GatherEnergy, owner, undefined);
+                    return;
+                }
+                var jobPos = job.Position;
+                var jobPosition = new RoomPosition(jobPos.X, jobPos.Y, jobPos.RoomName);
+                
+                if (owner.upgradeController(owner.room.controller) == ERR_NOT_IN_RANGE) {
+                    owner.moveTo(jobPosition);
                 }
             }
             else {
@@ -116,6 +124,25 @@ var UpgradeControllerStates = {
             var job = creepMem.Job;
             if (job) {
                 console.log(owner.name + ' has a job of type ' + job.JobType + '.');
+                if (owner.carry.energy >= owner.carryCapacity) {
+                    console.log('->Has ' + owner.carry.energy + '/' + owner.carryCapacity + ' energy.  Moving to upgrade controller.');
+                    stateMachine.ChangeState(UpgradeControllerStates.MoveToController, owner, undefined);
+                    return;
+                }
+                var sources = owner.room.find(FIND_SOURCES);
+                sources.sort(function (a, b) {
+                    var rangeA = owner.pos.getRangeTo(a);
+                    var rangeB = owner.pos.getRangeTo(b);
+  
+                    return owner.pos.getRangeTo(a) - owner.pos.getRangeTo(b);
+                });
+                if (owner.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+                    //console.log(owner.name + '(' + owner.memory.role + ') moving to source ' + sourceIndex)
+                    var ret = owner.moveTo(sources[0]);
+                    if (ret == ERR_NO_PATH) {
+                        console.log('we have a problem getting to the closest source!');
+                    }
+                }
             }
             else {
                 console.log('->Has no Job.  Cannot perform this state without one.')
