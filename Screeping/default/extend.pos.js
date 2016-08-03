@@ -10,10 +10,10 @@ var DebugLog = function(str)
 }
 
 RoomPosition.prototype.getSurroundings = function () {
-    var top = this.x - 1
-    var bottom = this.x + 1
-    var left = this.y - 1
-    var right = this.y + 1
+    var top = this.y - 1
+    var bottom = this.y + 1
+    var left = this.x - 1
+    var right = this.x + 1
     var room = Game.rooms[this.roomName]
     var surroundingsArray = room.lookAtArea(top, left, bottom, right, true)
     return surroundingsArray
@@ -44,7 +44,7 @@ RoomPosition.prototype.getFreeSpacesForMemory = function () {
     var fsMem = []
     for (var i in freeSpaces) {
         var fs = freeSpaces[i];
-        fsMem.push({ RoomName: this.roomName, X: fs.y, Y: fs.x });
+        fsMem.push({ RoomName: this.roomName, X: fs.x, Y: fs.y });
     }
     return fsMem;
 }
