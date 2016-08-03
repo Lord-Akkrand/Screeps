@@ -67,9 +67,15 @@ StructureController.prototype.updateJobs = function (jobManager) {
             jobManager.AddJob(newJob);
         }
     }
+
+    if (!memory.roomVersionNumber || memory.roomVersionNumber != Memory.roomVersionNumber) {
+        for (var i in jobs) {
+            jobManager.AddJob(jobs[i]);
+        }
+    }
 }
 
-var controllerVersionNumber = 2
+var controllerVersionNumber = 4
 
 if (!Memory.controllerVersionNumber || Memory.controllerVersionNumber != controllerVersionNumber) {
     console.log('Initialising Source Memory ' + Memory.controllerVersionNumber + ' -> ' + controllerVersionNumber)

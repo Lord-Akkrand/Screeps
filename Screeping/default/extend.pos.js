@@ -44,7 +44,7 @@ RoomPosition.prototype.getFreeSpacesForMemory = function () {
     var fsMem = []
     for (var i in freeSpaces) {
         var fs = freeSpaces[i];
-        fsMem.push({ RoomName: this.roomName, X: fs.x, Y: fs.y });
+        fsMem.push({ RoomName: this.roomName, X: fs.y, Y: fs.x });
     }
     return fsMem;
 }

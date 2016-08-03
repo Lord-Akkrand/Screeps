@@ -86,7 +86,7 @@ Room.prototype.calculateCreepRequirements = function () {
         mem.RequiredCreeps[roles[i]] = 0;
     }
     // Always at least two workers (one for the controller, one for the spawn)
-    mem.RequiredCreeps['Worker'] = 2;
+    mem.RequiredCreeps['Worker'] = 5;
     for (var i in sources) {
         console.log(i + ' ' + sources[i])
         var source = Game.getObjectById(sources[i]);
@@ -147,7 +147,7 @@ Room.prototype.initialiseJobManager = function () {
     this.jobManager.OnInit(this);
 }
 
-var roomVersionNumber = 1
+var roomVersionNumber = 3
 
 if (!Memory.roomVersionNumber || Memory.roomVersionNumber != roomVersionNumber) {
     console.log('Initialising Room Memory ' + Memory.roomVersionNumber + ' -> ' + roomVersionNumber)
