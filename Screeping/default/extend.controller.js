@@ -69,6 +69,7 @@ StructureController.prototype.updateJobs = function (jobManager) {
     }
 
     if (!memory.roomVersionNumber || memory.roomVersionNumber != Memory.roomVersionNumber) {
+        memory.roomVersionNumber = Memory.roomVersionNumber
         for (var i in jobs) {
             jobManager.AddJob(jobs[i]);
         }

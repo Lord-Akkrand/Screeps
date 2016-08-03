@@ -147,7 +147,7 @@ Room.prototype.initialiseJobManager = function () {
     this.jobManager.OnInit(this);
 }
 
-var roomVersionNumber = 3
+var roomVersionNumber = 4
 
 if (!Memory.roomVersionNumber || Memory.roomVersionNumber != roomVersionNumber) {
     console.log('Initialising Room Memory ' + Memory.roomVersionNumber + ' -> ' + roomVersionNumber)
