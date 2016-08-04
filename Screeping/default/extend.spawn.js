@@ -13,8 +13,13 @@ require('extend.pos')
 var CasteFactory = require('caste')
 var Role = require('role')
 
-StructureSpawn.prototype.initialise = function () {
 
+var spawnVersionNumber = 1
+
+StructureSpawn.prototype.initialise = function () {
+    Memory.spawns[this.name] = {
+        spawnVersionNumber: spawnVersionNumber       
+    }
 }
 
 StructureSpawn.prototype.update = function ()
@@ -67,16 +72,22 @@ StructureSpawn.prototype.place = function ()
 
 }
 
-var SpawnVersionNumber = 1
-
-if (!Memory.spawnVersion || Memory.spawnVersion != SpawnVersionNumber) {
-    console.log('Initialising Memory ' + Memory.spawnVersion + ' -> ' + SpawnVersionNumber)
+if (!Memory.spawnVersionNumber || Memory.spawnVersionNumber != spawnVersionNumber) {
+    console.log('Initialising Spawn Memory ' + Memory.spawnVersionNumber + ' -> ' + spawnVersionNumber)
     // Initialization not done: do it
-    for (var name in Game.spawns) {
+    Memory.spawns = undefined;
+    // Set the initialization flag
+    Memory.spawnVersionNumber = spawnVersionNumber;
+}
+if (Memory.spawns == undefined) {
+    Memory.spawns = {};
+}
+
+for (var name in Game.spawns) {
+    var spawn = Game.spawns[name];
+    var spawnMem = Memory.spawns[this.name];
+    if (spawnMem == undefined || spawnMem.spawnVersionNumber != spawnVersionNumber) {
         console.log('Initialising Spawn ' + name)
-        var spawn = Game.spawns[name];
         spawn.initialise()
     }
-    // Set the initialization flag
-    Memory.spawnVersion = SpawnVersionNumber;
 }

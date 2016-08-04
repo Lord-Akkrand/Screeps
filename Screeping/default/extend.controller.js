@@ -12,12 +12,15 @@ var DebugLog = function(str)
 require('extend.pos')
 var JobFactory = require('job')
 
+var controllerVersionNumber = 4
+
 StructureController.prototype.initialise = function () {
     var fs = this.pos.getFreeSpacesForMemory()
 
     Memory.controllers[this.id] = {
         FreeSpaces: fs,
         Jobs: [],
+        controllerVersionNumber: controllerVersionNumber
     }
     console.log("Added memory for StructureController " + this.id + " in Room " + this.room.id)
     var fsMem =  Memory.controllers[this.id].FreeSpaces
@@ -76,21 +79,25 @@ StructureController.prototype.updateJobs = function (jobManager) {
     }
 }
 
-var controllerVersionNumber = 4
-
 if (!Memory.controllerVersionNumber || Memory.controllerVersionNumber != controllerVersionNumber) {
     console.log('Initialising Source Memory ' + Memory.controllerVersionNumber + ' -> ' + controllerVersionNumber)
     // Initialization not done: do it
-    if (Memory.controllers == undefined) {
-        Memory.controllers = {}
-    }
-    for (var i in Game.rooms) {
-        var room = Game.rooms[i];
-        var controller = room.controller
-        if (controller && controller.my) {
-            controller.initialise()
-        }
-    }
+    Memory.controllers = undefined;
     // Set the initialization flag
     Memory.controllerVersionNumber = controllerVersionNumber;
+}
+
+if (Memory.controllers == undefined) {
+    Memory.controllers = {}
+}
+
+for (var i in Game.rooms) {
+    var room = Game.rooms[i];
+    var controller = room.controller
+    if (controller && controller.my) {
+        var controllerMem =  Memory.controllers[controller.id]
+        if (controllerMem == undefined || controllerMem.controllerVersionNumber != controllerVersionNumber) {
+            controller.initialise()
+        }
+    } 
 }

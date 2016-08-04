@@ -71,7 +71,6 @@
     <Content Include="default\main.garbagecollector.js" />
     <Content Include="default\main.init.js" />
     <Content Include="default\main.js" />
-    <Content Include="default\main.population.js" />
     <Content Include="default\role.builder.js" />
     <Content Include="default\role.guard.js" />
     <Content Include="default\role.harvester.js" />

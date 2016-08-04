@@ -18,9 +18,12 @@ var Protocols = [
 var Role = require('role')
 var JobManager = require('jobmanager')
 
+var roomVersionNumber = 4
+
 Room.prototype.initialise = function () {
     var mem = {
         Sources: [],
+        roomVersionNumber: roomVersionNumber
     };
     var sources = this.find(FIND_SOURCES);
     for (var i in sources) {
@@ -147,31 +150,26 @@ Room.prototype.initialiseJobManager = function () {
     this.jobManager.OnInit(this);
 }
 
-var roomVersionNumber = 4
-
 if (!Memory.roomVersionNumber || Memory.roomVersionNumber != roomVersionNumber) {
     console.log('Initialising Room Memory ' + Memory.roomVersionNumber + ' -> ' + roomVersionNumber)
-    // Initialization not done: do it
-    if (Memory.rooms == undefined) {
-        Memory.rooms = {}
-    }
-    for (var i in Game.rooms) {
-        var room = Game.rooms[i];
-        var controller = room.controller
-        if (controller && controller.my) {
-            room.initialise();
-        }
-    }
+
     // Set the initialization flag
     Memory.roomVersionNumber = roomVersionNumber;
+    Memory.rooms = undefined;
 }
 
-// Every tick, create the job manager for each room 
-// (not too expensive as there's nowhere near as many rooms as creeps) 
+if (Memory.rooms == undefined) {
+    Memory.rooms = {}
+}
+
 for (var i in Game.rooms) {
     var room = Game.rooms[i];
     var controller = room.controller
     if (controller && controller.my) {
+        var roomMem = Memory.rooms[room.name];
+        if (roomMem == undefined || roomMem.roomVersionNumber != roomVersionNumber) {
+            room.initialise();
+        }
         room.initialiseJobManager();
     }
 }

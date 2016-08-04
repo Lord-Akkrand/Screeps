@@ -9,12 +9,12 @@
 
 // Check for the initialization flag
 
-var mainVersion = 1
+var mainVersionNumber = 1
 
-if (!Memory.mainVersion || Memory.mainVersion != mainVersion) {
-    console.log('Initialising Memory ' + Memory.mainVersion + ' -> ' + mainVersion)
+if (!Memory.mainVersionNumber || Memory.mainVersionNumber != mainVersionNumber) {
+    console.log('Initialising Main Memory ' + Memory.mainVersionNumber + ' -> ' + mainVersionNumber)
     // Initialization not done: do it
 
     // Set the initialization flag
-    Memory.mainVersion = mainVersion;
+    Memory.mainVersionNumber = mainVersionNumber;
 }

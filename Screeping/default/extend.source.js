@@ -12,13 +12,16 @@ var DebugLog = function(str)
 require('extend.pos')
 var JobFactory = require('job')
 
+var sourceVersionNumber = 1
+
 Source.prototype.initialise = function () {
     var fs = this.pos.getFreeSpacesForMemory()
     
     Memory.sources[this.id] = {
         FreeSpaces: fs,
         Assigned: {},
-        Jobs:[]
+        Jobs: [],
+        sourceVersionNumber: sourceVersionNumber
     }
     this.calculateRequiredHarvesters();
     console.log("Added memory for Source " + this.id + " in Room " + this.room.id)
@@ -81,10 +84,11 @@ Source.prototype.updateJobs = function(jobManager, sourceIndex) {
     }
 }
 
-
+/*
 Source.prototype.update = function() {
     console.log('Source name ' + this.id)
 }
+*/
 
 Source.prototype.getMemory = function () {
     return Memory.sources[this.id];
@@ -140,25 +144,29 @@ Source.prototype.garbagecollector = function () {
     }
 }
 
-var sourceVersionNumber = 1
-
 if (!Memory.sourceVersionNumber || Memory.sourceVersionNumber != sourceVersionNumber) {
     console.log('Initialising Source Memory ' + Memory.sourceVersionNumber + ' -> ' + sourceVersionNumber)
     // Initialization not done: do it
-    if (Memory.sources == undefined) {
-        Memory.sources = {}
-    }
-    for (var i in Game.rooms) {
-        var room = Game.rooms[i];
-        var controller = room.controller
-        if (controller && controller.my) {
-            var sources = room.find(FIND_SOURCES);
-            for (var j in sources) {
-                var source = sources[j]
+    Memory.sources = undefined;
+    // Set the initialization flag
+    Memory.sourceVersionNumber = sourceVersionNumber;
+}
+
+if (Memory.sources == undefined) {
+    Memory.sources = {}
+}
+
+for (var i in Game.rooms) {
+    var room = Game.rooms[i];
+    var controller = room.controller
+    if (controller && controller.my) {
+        var sources = room.find(FIND_SOURCES);
+        for (var j in sources) {
+            var source = sources[j]
+            var sourceMem = Memory.sources[source.id];
+            if (sourceMem == undefined || sourceMem.sourceVersionNumber != sourceVersionNumber) {
                 source.initialise()
             }
         }
     }
-    // Set the initialization flag
-    Memory.sourceVersionNumber = sourceVersionNumber;
 }
