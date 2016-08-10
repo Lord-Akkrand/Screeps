@@ -24,3 +24,9 @@ for (var name in Memory.spawns) {
         delete Memory.spawns[name];
     }
 }
+
+for (var name in Memory.rooms) {
+    if (!Game.rooms[name]) {
+        delete Memory.rooms[name];
+    }
+}

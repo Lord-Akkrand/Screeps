@@ -4,6 +4,7 @@ var UpgradeControllerStates = require('role.worker.upgradecontroller');
 
 var WorkerHubJobStates = {
     UpgradeController: UpgradeControllerStates.HubState,
+    BuildStructure: BuildStructureStates.HubState,
 };
 
 var WorkerHubState = {

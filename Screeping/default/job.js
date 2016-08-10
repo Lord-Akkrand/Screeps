@@ -9,8 +9,15 @@ var JobFactory = {
         job.BodyRequirements = parts;
     },
 
-    SetPriority: function(job, priority) {
+    SetPriority: function (job, priority) {
+        console.log(' job priority set:');
+        for (var i in priority) {
+            console.log('  ' + i + ' : ' + priority[i]);
+        }
         job.Priority = priority;
+        for (var i in job.Priority) {
+            console.log('  ' + i + ' : ' + job.Priority[i]);
+        }
     },
 
     Compare: function (jobA, jobB) {

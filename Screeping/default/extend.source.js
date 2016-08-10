@@ -61,11 +61,14 @@ Source.prototype.updateJobs = function(jobManager, sourceIndex) {
         }
         else
         {
+            var minorPriority = (i * 2) + 1;
+            console.log(' source ' + sourceIndex + ' has sourcePriority of ' + sourcePriority + ', freespaces ' + i + ' makes minorPriority of ' + minorPriority)
+
             var position = new RoomPosition(fs.X, fs.Y, fs.RoomName);
             // There should be a job to create & build this container.
             var existingJob = jobs.find(function (job) {
                 return job.JobType == 'BuildStructure'
-                    && job.TargetId == 'Container'
+                    && job.TargetId == STRUCTURE_CONTAINER
                     && job.Position.X == fs.X
                     && job.Position.Y == fs.Y
                     && job.Position.Z == fs.Z
@@ -73,7 +76,7 @@ Source.prototype.updateJobs = function(jobManager, sourceIndex) {
             });
 
             if (existingJob == undefined) {
-                var newJob = JobFactory.CreateJob('BuildStructure', this.id, 'Container');
+                var newJob = JobFactory.CreateJob('BuildStructure', this.id, STRUCTURE_CONTAINER);
                 JobFactory.AddPosition(newJob, position);
                 JobFactory.SetBodyRequirements(newJob, [WORK, CARRY, MOVE]);
                 JobFactory.SetPriority(newJob, [majorPriority, sourcePriority, minorPriority]);
